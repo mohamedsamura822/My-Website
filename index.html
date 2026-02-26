@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Tech Innovation Hub — STEM for Every Child</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0a0f2e;
+  --electric: #00d4ff;
+  --lime: #b8ff3c;
+  --orange: #ff6b2b;
+  --white: #f8f9ff;
+  --mid: #1a2250;
+  --card: #111838;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--white);overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.4}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 5%;backdrop-filter:blur(18px);background:rgba(10,15,46,.8);border-bottom:1px solid rgba(0,212,255,.12)}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;letter-spacing:-.02em;color:var(--white);text-decoration:none;cursor:pointer}
+.logo span{color:var(--electric)}
+.nav-links{display:flex;gap:.3rem;list-style:none;align-items:center}
+.nav-links a{color:rgba(248,249,255,.7);text-decoration:none;font-size:.88rem;font-weight:500;transition:color .2s;padding:.4rem .9rem;border-radius:8px;cursor:pointer}
+.nav-links a:hover,.nav-links a.active{color:var(--electric);background:rgba(0,212,255,.07)}
+.nav-cta{background:var(--electric)!important;color:var(--navy)!important;padding:.5rem 1.3rem!important;border-radius:100px!important;font-weight:700!important}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,212,255,.35)!important;background:var(--electric)!important}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:.4rem}
+.hamburger span{width:24px;height:2px;background:var(--white);border-radius:4px;transition:.3s}
+
+/* ── PAGES ── */
+.page{display:none;min-height:100vh}
+.page.active{display:block}
+
+/* ── SHARED ── */
+section{padding:6rem 5%}
+.section-label{display:inline-flex;align-items:center;gap:.6rem;font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.15em;color:var(--electric);margin-bottom:1rem}
+.section-label::before{content:'';width:28px;height:2px;background:var(--electric)}
+h2{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-.03em;line-height:1.05}
+h3{font-family:'Syne',sans-serif;font-weight:700}
+.text-lime{color:var(--lime)}.text-electric{color:var(--electric)}.text-orange{color:var(--orange)}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.4)}}
+
+/* ── BUTTONS ── */
+.btn-primary{background:var(--lime);color:var(--navy);padding:.9rem 2rem;border-radius:100px;font-weight:700;font-size:1rem;text-decoration:none;font-family:'Syne',sans-serif;transition:transform .2s,box-shadow .2s;display:inline-flex;align-items:center;gap:.5rem;cursor:pointer;border:none}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(184,255,60,.3)}
+.btn-outline{border:1.5px solid rgba(248,249,255,.25);color:var(--white);padding:.9rem 2rem;border-radius:100px;font-weight:500;font-size:1rem;text-decoration:none;transition:border-color .2s,background .2s;display:inline-flex;align-items:center;gap:.5rem;cursor:pointer;background:transparent}
+.btn-outline:hover{border-color:var(--electric);background:rgba(0,212,255,.07)}
+.btn-electric{background:var(--electric);color:var(--navy);padding:.75rem 1.8rem;border-radius:100px;font-weight:700;font-size:.9rem;font-family:'Syne',sans-serif;border:none;cursor:pointer;transition:transform .2s,box-shadow .2s;display:inline-flex;align-items:center;gap:.5rem}
+.btn-electric:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,212,255,.3)}
+.btn-dark{background:var(--navy);color:var(--white);padding:1rem 2.5rem;border-radius:100px;font-weight:700;font-size:1rem;text-decoration:none;font-family:'Syne',sans-serif;transition:transform .2s,box-shadow .2s;display:inline-flex;align-items:center;gap:.6rem;position:relative;z-index:2;border:none;cursor:pointer}
+.btn-dark:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(10,15,46,.4)}
+
+/* ──────────────────────────────────────────
+   HOME PAGE
+────────────────────────────────────────── */
+.hero{min-height:100vh;display:flex;align-items:center;padding:8rem 5% 5rem;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 75% 50%,rgba(0,212,255,.12) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 20% 80%,rgba(184,255,60,.08) 0%,transparent 60%),radial-gradient(ellipse 50% 50% at 50% 0%,rgba(255,107,43,.07) 0%,transparent 60%)}
+.grid-lines{position:absolute;inset:0;background-image:linear-gradient(rgba(0,212,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,.04) 1px,transparent 1px);background-size:60px 60px}
+.hero-content{position:relative;z-index:2;max-width:700px}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.25);padding:.4rem 1rem;border-radius:100px;font-size:.8rem;font-weight:500;color:var(--electric);margin-bottom:1.8rem;animation:fadeUp .6s ease both}
+.hero-badge::before{content:'';width:8px;height:8px;background:var(--electric);border-radius:50%;animation:pulse 2s infinite}
+h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(3rem,6vw,5.5rem);line-height:1;letter-spacing:-.03em;animation:fadeUp .7s .1s ease both}
+h1 .accent{color:var(--electric)}
+h1 .accent2{color:var(--lime)}
+.hero-sub{margin:1.5rem 0 2.5rem;font-size:1.15rem;line-height:1.7;color:rgba(248,249,255,.65);max-width:520px;animation:fadeUp .7s .2s ease both;font-weight:300}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeUp .7s .3s ease both}
+.hero-visual{position:absolute;right:3%;top:50%;transform:translateY(-50%);width:min(500px,45vw);animation:fadeUp .8s .2s ease both}
+.hero-cards{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.hero-card{background:var(--card);border:1px solid rgba(0,212,255,.15);border-radius:16px;overflow:hidden;position:relative}
+.hero-card:first-child{grid-column:span 2}
+.hero-card img{width:100%;height:200px;object-fit:cover;display:block;transition:transform .4s}
+.hero-card:first-child img{height:260px}
+.hero-card:hover img{transform:scale(1.04)}
+.hero-card-label{position:absolute;bottom:0;left:0;right:0;padding:.8rem 1rem;background:linear-gradient(transparent,rgba(10,15,46,.95));font-size:.8rem;font-weight:600;color:var(--electric);font-family:'Syne',sans-serif;letter-spacing:.05em;text-transform:uppercase}
+
+.stats{padding:4rem 5%;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(0,212,255,.1);border-top:1px solid rgba(0,212,255,.12);border-bottom:1px solid rgba(0,212,255,.12)}
+.stat{background:var(--navy);padding:2.5rem;text-align:center}
+.stat-num{font-family:'Syne',sans-serif;font-size:3rem;font-weight:800;color:var(--lime);line-height:1}
+.stat-label{margin-top:.4rem;font-size:.85rem;color:rgba(248,249,255,.5);font-weight:300;text-transform:uppercase;letter-spacing:.1em}
+
+.programs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:3rem}
+.program-card{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:20px;overflow:hidden;transition:transform .3s,border-color .3s,box-shadow .3s}
+.program-card:hover{transform:translateY(-6px);border-color:var(--electric);box-shadow:0 20px 50px rgba(0,212,255,.12)}
+.program-card img{width:100%;height:220px;object-fit:cover;display:block}
+.program-body{padding:1.8rem}
+.program-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1rem}
+.program-card h3{font-size:1.25rem;margin-bottom:.6rem}
+.program-card p{font-size:.9rem;line-height:1.65;color:rgba(248,249,255,.55);font-weight:300}
+.program-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.2rem}
+.tag{font-size:.72rem;padding:.25rem .7rem;border-radius:100px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+
+.how{background:var(--mid);position:relative;overflow:hidden}
+.how::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,255,.06) 0%,transparent 70%);pointer-events:none}
+.how-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;margin-top:3rem}
+.step{display:flex;gap:1.5rem;padding:1.8rem;border-radius:16px;transition:background .2s}
+.step:hover{background:rgba(0,212,255,.05)}
+.step-num{width:44px;height:44px;min-width:44px;border-radius:12px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.25);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:.9rem;color:var(--electric)}
+.step h4{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:.4rem}
+.step p{font-size:.88rem;color:rgba(248,249,255,.5);line-height:1.6;font-weight:300}
+.how-img-wrap{border-radius:24px;overflow:hidden;border:1px solid rgba(0,212,255,.2);box-shadow:0 30px 80px rgba(0,0,0,.4);position:relative}
+.how-img-wrap img{width:100%;display:block}
+.floating-badge{position:absolute;border-radius:14px;padding:.8rem 1.2rem;font-family:'Syne',sans-serif;font-weight:800;font-size:.85rem}
+.floating-badge.one{bottom:-16px;left:-16px;background:var(--lime);color:var(--navy)}
+.floating-badge.two{top:-16px;right:-16px;background:var(--electric);color:var(--navy)}
+
+.impact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+.impact-card{background:var(--card);border-radius:20px;padding:2.5rem;border:1px solid rgba(255,255,255,.06);position:relative;overflow:hidden}
+.impact-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.impact-card.c1::before{background:var(--electric)}
+.impact-card.c2::before{background:var(--lime)}
+.impact-card.c3::before{background:var(--orange)}
+.impact-emoji{font-size:2.5rem;margin-bottom:1.2rem}
+.impact-card h3{font-size:1.1rem;margin-bottom:.6rem}
+.impact-card p{font-size:.88rem;color:rgba(248,249,255,.5);line-height:1.65;font-weight:300}
+
+.testimonials{background:var(--mid)}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+.testi-card{background:var(--card);border-radius:20px;padding:2rem;border:1px solid rgba(255,255,255,.06)}
+.testi-stars{color:var(--lime);font-size:1rem;margin-bottom:1rem;letter-spacing:2px}
+.testi-text{font-size:.92rem;line-height:1.7;color:rgba(248,249,255,.7);font-style:italic;font-weight:300;margin-bottom:1.5rem}
+.testi-author{display:flex;align-items:center;gap:.8rem}
+.testi-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--electric),var(--lime));display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:.85rem;color:var(--navy)}
+.testi-name{font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem}
+.testi-role{font-size:.78rem;color:rgba(248,249,255,.4);font-weight:300}
+
+.partners-section{text-align:center}
+.partners-row{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;margin-top:2.5rem}
+.partner-chip{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:100px;padding:.7rem 1.5rem;font-size:.85rem;font-weight:500;color:rgba(248,249,255,.6);transition:border-color .2s,color .2s}
+.partner-chip:hover{border-color:var(--electric);color:var(--electric)}
+
+.cta-banner{margin:0 5% 6rem;background:linear-gradient(135deg,var(--electric) 0%,#0095b3 100%);border-radius:28px;padding:5rem;text-align:center;position:relative;overflow:hidden}
+.cta-banner::before{content:'';position:absolute;top:-60px;right:-60px;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.1)}
+.cta-banner::after{content:'';position:absolute;bottom:-40px;left:-40px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.08)}
+.cta-banner h2{color:var(--navy);font-size:clamp(2rem,4vw,3rem);margin-bottom:1rem}
+.cta-banner p{color:rgba(10,15,46,.75);font-size:1.1rem;margin-bottom:2.5rem;font-weight:400}
+
+/* ──────────────────────────────────────────
+   ABOUT PAGE
+────────────────────────────────────────── */
+.page-hero{padding:10rem 5% 5rem;position:relative;overflow:hidden}
+.page-hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 0%,rgba(0,212,255,.1) 0%,transparent 70%)}
+.page-hero .grid-lines{position:absolute;inset:0}
+.page-hero-inner{position:relative;z-index:2;text-align:center;max-width:800px;margin:0 auto}
+.page-hero-inner p{font-size:1.15rem;color:rgba(248,249,255,.6);line-height:1.8;margin-top:1.2rem;font-weight:300}
+
+.about-story{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.about-story-img{border-radius:24px;overflow:hidden;border:1px solid rgba(0,212,255,.15);box-shadow:0 24px 60px rgba(0,0,0,.4)}
+.about-story-img img{width:100%;display:block}
+.about-story-text .section-label{margin-bottom:.8rem}
+.about-story-text h2{margin-bottom:1.5rem}
+.about-story-text p{font-size:.97rem;color:rgba(248,249,255,.6);line-height:1.8;font-weight:300;margin-bottom:1rem}
+
+.values-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;margin-top:3rem}
+.value-card{background:var(--card);border-radius:20px;padding:2rem;border:1px solid rgba(255,255,255,.06);transition:transform .3s,border-color .3s}
+.value-card:hover{transform:translateY(-5px);border-color:rgba(0,212,255,.3)}
+.value-icon{font-size:2.2rem;margin-bottom:1rem}
+.value-card h3{font-size:1rem;margin-bottom:.5rem}
+.value-card p{font-size:.87rem;color:rgba(248,249,255,.5);line-height:1.6;font-weight:300}
+
+.team-section{background:var(--mid)}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;margin-top:3rem}
+.team-card{background:var(--card);border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,.06);text-align:center;transition:transform .3s,box-shadow .3s}
+.team-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.team-card img{width:100%;height:220px;object-fit:cover;object-position:top}
+.team-card-body{padding:1.4rem}
+.team-card h3{font-size:1rem;margin-bottom:.3rem}
+.team-role{font-size:.82rem;color:var(--electric);font-weight:500;margin-bottom:.6rem}
+.team-bio{font-size:.82rem;color:rgba(248,249,255,.45);line-height:1.55;font-weight:300}
+
+.milestones{padding:6rem 5%;background:var(--navy)}
+.timeline{margin-top:3rem;position:relative;padding-left:2rem}
+.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--electric),var(--lime),var(--orange))}
+.milestone{padding:0 0 3rem 2.5rem;position:relative}
+.milestone::before{content:'';position:absolute;left:-6px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--electric);border:2px solid var(--navy);box-shadow:0 0 12px rgba(0,212,255,.5)}
+.milestone-year{font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700;color:var(--electric);text-transform:uppercase;letter-spacing:.12em;margin-bottom:.4rem}
+.milestone h4{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:.4rem}
+.milestone p{font-size:.9rem;color:rgba(248,249,255,.5);line-height:1.6;font-weight:300}
+
+/* ──────────────────────────────────────────
+   GALLERY PAGE
+────────────────────────────────────────── */
+.gallery-filters{display:flex;gap:.6rem;flex-wrap:wrap;margin:2rem 0}
+.filter-btn{background:transparent;border:1.5px solid rgba(255,255,255,.12);color:rgba(248,249,255,.6);padding:.45rem 1.1rem;border-radius:100px;font-size:.84rem;font-weight:500;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.filter-btn:hover,.filter-btn.active{border-color:var(--electric);color:var(--electric);background:rgba(0,212,255,.08)}
+
+.gallery-masonry{columns:4;gap:1rem;margin-top:1rem}
+.gallery-item{break-inside:avoid;margin-bottom:1rem;border-radius:16px;overflow:hidden;position:relative;cursor:pointer;border:1px solid rgba(255,255,255,.05)}
+.gallery-item img{width:100%;display:block;transition:transform .4s}
+.gallery-item:hover img{transform:scale(1.05)}
+.gallery-overlay{position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(10,15,46,.9));opacity:0;transition:opacity .3s;display:flex;align-items:flex-end;padding:1rem}
+.gallery-item:hover .gallery-overlay{opacity:1}
+.gallery-caption{font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700;color:var(--electric);text-transform:uppercase;letter-spacing:.05em}
+
+/* Lightbox */
+.lightbox{display:none;position:fixed;inset:0;background:rgba(5,8,20,.95);z-index:1000;align-items:center;justify-content:center;backdrop-filter:blur(10px)}
+.lightbox.open{display:flex}
+.lightbox img{max-width:90vw;max-height:85vh;border-radius:16px;box-shadow:0 40px 100px rgba(0,0,0,.6)}
+.lb-close{position:absolute;top:1.5rem;right:2rem;font-size:2rem;color:rgba(248,249,255,.6);cursor:pointer;line-height:1;transition:color .2s}
+.lb-close:hover{color:var(--white)}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);font-size:2.5rem;color:rgba(248,249,255,.4);cursor:pointer;transition:color .2s;background:rgba(255,255,255,.05);border:none;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.lb-nav:hover{color:var(--electric);background:rgba(0,212,255,.12)}
+.lb-prev{left:1.5rem}
+.lb-next{right:1.5rem}
+.lb-caption{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);font-family:'Syne',sans-serif;font-size:.85rem;color:rgba(248,249,255,.5);text-align:center}
+
+/* ──────────────────────────────────────────
+   RESOURCES PAGE
+────────────────────────────────────────── */
+.resources-tabs{display:flex;gap:.5rem;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:3rem}
+.res-tab{background:transparent;border:none;color:rgba(248,249,255,.5);font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;padding:.9rem 1.5rem;cursor:pointer;position:relative;transition:color .2s}
+.res-tab::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:var(--electric);transform:scaleX(0);transition:transform .3s}
+.res-tab.active{color:var(--electric)}
+.res-tab.active::after{transform:scaleX(1)}
+.res-tab:hover{color:var(--white)}
+
+.res-panel{display:none}
+.res-panel.active{display:block}
+
+/* Upload zone */
+.upload-zone{border:2px dashed rgba(0,212,255,.25);border-radius:20px;padding:3.5rem;text-align:center;transition:border-color .3s,background .3s;cursor:pointer;margin-bottom:2rem}
+.upload-zone:hover,.upload-zone.dragover{border-color:var(--electric);background:rgba(0,212,255,.04)}
+.upload-icon{font-size:3rem;margin-bottom:1rem}
+.upload-zone h3{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:.5rem}
+.upload-zone p{font-size:.9rem;color:rgba(248,249,255,.4);font-weight:300}
+.upload-zone input[type=file]{display:none}
+.upload-btn{display:inline-flex;align-items:center;gap:.5rem;background:rgba(0,212,255,.12);border:1px solid rgba(0,212,255,.3);color:var(--electric);padding:.6rem 1.4rem;border-radius:100px;font-size:.88rem;font-weight:600;cursor:pointer;margin-top:1rem;transition:background .2s}
+.upload-btn:hover{background:rgba(0,212,255,.2)}
+
+/* Resource cards */
+.resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem}
+.resource-card{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:1.5rem;display:flex;flex-direction:column;gap:1rem;transition:transform .2s,border-color .2s}
+.resource-card:hover{transform:translateY(-4px);border-color:rgba(0,212,255,.2)}
+.res-thumb{width:100%;height:160px;border-radius:10px;background:var(--mid);display:flex;align-items:center;justify-content:center;font-size:3.5rem;position:relative;overflow:hidden}
+.res-thumb img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.res-thumb-icon{position:relative;z-index:1}
+.res-badge{position:absolute;top:.6rem;right:.6rem;font-size:.7rem;font-weight:700;padding:.25rem .6rem;border-radius:6px;text-transform:uppercase;letter-spacing:.05em}
+.res-badge.video{background:rgba(255,107,43,.2);color:var(--orange)}
+.res-badge.book{background:rgba(0,212,255,.15);color:var(--electric)}
+.res-badge.pdf{background:rgba(184,255,60,.15);color:var(--lime)}
+.res-info{}
+.res-title{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;margin-bottom:.3rem}
+.res-meta{font-size:.8rem;color:rgba(248,249,255,.4);font-weight:300;margin-bottom:.8rem}
+.res-desc{font-size:.85rem;color:rgba(248,249,255,.5);line-height:1.55;font-weight:300}
+.res-actions{display:flex;gap:.6rem;margin-top:auto}
+.res-action-btn{flex:1;text-align:center;padding:.5rem;border-radius:10px;font-size:.8rem;font-weight:600;cursor:pointer;border:none;transition:background .2s;font-family:'DM Sans',sans-serif}
+.res-action-btn.primary{background:rgba(0,212,255,.12);color:var(--electric)}
+.res-action-btn.primary:hover{background:rgba(0,212,255,.22)}
+.res-action-btn.secondary{background:rgba(255,255,255,.05);color:rgba(248,249,255,.5)}
+.res-action-btn.secondary:hover{background:rgba(255,255,255,.1)}
+
+/* Upload progress */
+.upload-progress{background:var(--card);border-radius:12px;padding:1.2rem;margin-bottom:1rem;display:flex;align-items:center;gap:1rem}
+.upload-progress .up-icon{font-size:1.5rem}
+.up-info{flex:1}
+.up-name{font-size:.9rem;font-weight:600;margin-bottom:.4rem}
+.up-bar-wrap{height:4px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden}
+.up-bar{height:100%;background:var(--electric);border-radius:4px;width:0;transition:width .3s}
+.up-percent{font-size:.78rem;color:rgba(248,249,255,.4);margin-top:.3rem}
+.up-cancel{background:transparent;border:none;color:rgba(248,249,255,.3);cursor:pointer;font-size:1.2rem;line-height:1}
+
+/* Video player */
+.video-player-wrap{background:var(--card);border-radius:16px;overflow:hidden;margin-bottom:1.5rem}
+.video-player-wrap video{width:100%;display:block}
+.video-info{padding:1.2rem}
+.video-info h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:.3rem}
+.video-info p{font-size:.85rem;color:rgba(248,249,255,.45);font-weight:300}
+
+/* ── PREVIEW MODAL ── */
+.preview-modal{display:none;position:fixed;inset:0;background:rgba(5,8,20,.97);z-index:1001;flex-direction:column;align-items:center;justify-content:flex-start;backdrop-filter:blur(12px);padding:4.5rem 2rem 2rem}
+.preview-modal.open{display:flex}
+.preview-modal-bar{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(10,15,46,.95);border-bottom:1px solid rgba(0,212,255,.15);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;z-index:1002}
+.preview-modal-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:var(--white);display:flex;align-items:center;gap:.7rem}
+.preview-modal-actions{display:flex;align-items:center;gap:.8rem}
+.pm-btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(248,249,255,.7);padding:.45rem 1rem;border-radius:8px;font-size:.82rem;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s,color .2s}
+.pm-btn:hover{background:rgba(0,212,255,.15);color:var(--electric)}
+.pm-close{background:transparent;border:none;color:rgba(248,249,255,.5);font-size:1.5rem;cursor:pointer;line-height:1;padding:.3rem;transition:color .2s}
+.pm-close:hover{color:var(--white)}
+.preview-frame{width:100%;max-width:960px;flex:1;border-radius:12px;overflow:hidden;background:var(--card);border:1px solid rgba(255,255,255,.07)}
+.preview-frame iframe{width:100%;height:100%;border:none;min-height:70vh}
+.preview-frame video{width:100%;height:100%;min-height:50vh;background:#000;display:block}
+.preview-unsupported{display:flex;flex-direction:column;align-items:center;justify-content:center;height:60vh;gap:1rem;color:rgba(248,249,255,.4)}
+.preview-unsupported span{font-size:4rem}
+.preview-unsupported p{font-size:.95rem;text-align:center}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid rgba(0,212,255,.1);padding:4rem 5% 3rem;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem}
+.footer-brand p{font-size:.88rem;color:rgba(248,249,255,.4);line-height:1.7;margin-top:.8rem;font-weight:300;max-width:280px}
+.footer-col h5{font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(248,249,255,.35);margin-bottom:1.2rem}
+.footer-col a{display:block;color:rgba(248,249,255,.55);text-decoration:none;font-size:.88rem;font-weight:300;margin-bottom:.6rem;transition:color .2s;cursor:pointer}
+.footer-col a:hover{color:var(--electric)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.05);padding:1.5rem 5%;display:flex;align-items:center;justify-content:space-between}
+.footer-bottom p{font-size:.8rem;color:rgba(248,249,255,.25)}
+.social-links{display:flex;gap:.8rem}
+.social-link{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;color:rgba(248,249,255,.5);text-decoration:none;font-size:.85rem;transition:background .2s,color .2s;cursor:pointer}
+.social-link:hover{background:rgba(0,212,255,.15);color:var(--electric)}
+
+/* Toast */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--card);border:1px solid rgba(0,212,255,.25);border-radius:14px;padding:1rem 1.5rem;display:flex;align-items:center;gap:.8rem;font-size:.9rem;font-weight:500;z-index:9000;transform:translateY(100px);opacity:0;transition:transform .3s,opacity .3s}
+.toast.show{transform:none;opacity:1}
+.toast-icon{font-size:1.3rem}
+
+/* ── ADMIN LOGIN MODAL ── */
+.admin-modal{display:none;position:fixed;inset:0;background:rgba(5,8,20,.96);z-index:2000;align-items:center;justify-content:center;backdrop-filter:blur(16px)}
+.admin-modal.open{display:flex}
+.admin-box{background:var(--card);border:1px solid rgba(0,212,255,.2);border-radius:24px;padding:3rem 2.5rem;width:min(420px,90vw);position:relative;box-shadow:0 40px 100px rgba(0,0,0,.6)}
+.admin-box-header{text-align:center;margin-bottom:2rem}
+.admin-lock{width:64px;height:64px;background:rgba(0,212,255,.1);border:2px solid rgba(0,212,255,.25);border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 1rem}
+.admin-box h3{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;margin-bottom:.3rem}
+.admin-box .sub{font-size:.85rem;color:rgba(248,249,255,.4);font-weight:300}
+.admin-field{margin-bottom:1.2rem}
+.admin-field label{display:block;font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(248,249,255,.4);margin-bottom:.5rem}
+.admin-field input{width:100%;background:var(--mid);border:1.5px solid rgba(255,255,255,.1);border-radius:12px;padding:.8rem 1rem;color:var(--white);font-family:'DM Sans',sans-serif;font-size:.95rem;outline:none;transition:border-color .2s}
+.admin-field input:focus{border-color:var(--electric)}
+.admin-field input.error{border-color:var(--orange)}
+.admin-err{font-size:.82rem;color:var(--orange);margin-top:-.6rem;margin-bottom:1rem;display:none}
+.admin-err.show{display:block}
+.admin-submit{width:100%;background:var(--electric);color:var(--navy);border:none;border-radius:12px;padding:.9rem;font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:transform .2s,box-shadow .2s;margin-top:.5rem}
+.admin-submit:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,212,255,.35)}
+.admin-cancel{display:block;text-align:center;margin-top:1rem;font-size:.85rem;color:rgba(248,249,255,.35);cursor:pointer;transition:color .2s}
+.admin-cancel:hover{color:rgba(248,249,255,.7)}
+.admin-hint{font-size:.78rem;color:rgba(248,249,255,.2);text-align:center;margin-top:1.2rem;line-height:1.6}
+
+/* ── ADMIN BADGE in NAV ── */
+.admin-nav-badge{display:none;align-items:center;gap:.5rem;background:rgba(184,255,60,.1);border:1px solid rgba(184,255,60,.25);color:var(--lime);padding:.35rem .9rem;border-radius:100px;font-size:.78rem;font-weight:700;cursor:pointer;transition:background .2s}
+.admin-nav-badge:hover{background:rgba(184,255,60,.18)}
+.admin-nav-badge.visible{display:flex}
+.admin-dot{width:7px;height:7px;border-radius:50%;background:var(--lime);animation:pulse 2s infinite}
+
+/* ── ADMIN CONTROLS ── */
+.res-delete-btn{position:absolute;top:.7rem;right:.7rem;width:30px;height:30px;border-radius:8px;background:rgba(255,107,43,.15);border:1px solid rgba(255,107,43,.3);color:var(--orange);font-size:.9rem;cursor:pointer;display:none;align-items:center;justify-content:center;transition:background .2s,transform .2s;z-index:10;line-height:1}
+.res-delete-btn:hover{background:rgba(255,107,43,.35);transform:scale(1.1)}
+body.is-admin .res-delete-btn{display:flex}
+body.is-admin .resource-card{position:relative}
+
+/* Hide upload tab from non-admins */
+.upload-tab-btn{display:none}
+body.is-admin .upload-tab-btn{display:inline-flex}
+
+/* Admin mode banner */
+.admin-mode-bar{display:none;position:fixed;bottom:0;left:0;right:0;z-index:500;background:rgba(184,255,60,.08);border-top:1px solid rgba(184,255,60,.2);padding:.6rem 5%;align-items:center;justify-content:space-between;gap:1rem;backdrop-filter:blur(12px)}
+.admin-mode-bar.show{display:flex}
+.admin-mode-bar span{font-size:.82rem;color:var(--lime);font-weight:600;display:flex;align-items:center;gap:.5rem}
+.admin-logout-btn{background:rgba(255,107,43,.12);border:1px solid rgba(255,107,43,.3);color:var(--orange);padding:.35rem 1rem;border-radius:8px;font-size:.8rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s}
+.admin-logout-btn:hover{background:rgba(255,107,43,.25)}
+
+/* Delete confirm modal */
+.del-modal{display:none;position:fixed;inset:0;background:rgba(5,8,20,.85);z-index:3000;align-items:center;justify-content:center;backdrop-filter:blur(10px)}
+.del-modal.open{display:flex}
+.del-box{background:var(--card);border:1px solid rgba(255,107,43,.25);border-radius:20px;padding:2.5rem;width:min(380px,88vw);text-align:center}
+.del-box .del-icon{font-size:3rem;margin-bottom:1rem}
+.del-box h4{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:800;margin-bottom:.6rem}
+.del-box p{font-size:.88rem;color:rgba(248,249,255,.5);line-height:1.6;margin-bottom:1.8rem;font-weight:300}
+.del-box-btns{display:flex;gap:.8rem;justify-content:center}
+.del-confirm{background:var(--orange);color:var(--white);border:none;border-radius:10px;padding:.7rem 1.6rem;font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;transition:opacity .2s}
+.del-confirm:hover{opacity:.85}
+.del-cancel-btn{background:rgba(255,255,255,.06);color:rgba(248,249,255,.6);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:.7rem 1.6rem;font-family:'DM Sans',sans-serif;font-weight:500;font-size:.9rem;cursor:pointer;transition:background .2s}
+.del-cancel-btn:hover{background:rgba(255,255,255,.12)}
+
+/* ── TEAM EDIT ── */
+.add-member-btn{display:none;align-items:center;gap:.5rem;background:rgba(184,255,60,.1);border:1.5px solid rgba(184,255,60,.3);color:var(--lime);padding:.55rem 1.2rem;border-radius:100px;font-family:'Syne',sans-serif;font-weight:700;font-size:.85rem;cursor:pointer;transition:background .2s,transform .2s}
+.add-member-btn:hover{background:rgba(184,255,60,.2);transform:translateY(-2px)}
+body.is-admin .add-member-btn{display:flex}
+
+.team-card{background:var(--card);border-radius:20px;overflow:visible;border:1px solid rgba(255,255,255,.06);text-align:center;transition:transform .3s,box-shadow .3s;position:relative}
+.team-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.team-card .tc-img-wrap{border-radius:20px 20px 0 0;overflow:hidden;height:220px}
+.team-card .tc-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;transition:transform .4s}
+.team-card:hover .tc-img-wrap img{transform:scale(1.04)}
+.team-card-body{padding:1.4rem}
+.team-card h3{font-size:1rem;margin-bottom:.3rem}
+.team-role{font-size:.82rem;color:var(--electric);font-weight:500;margin-bottom:.6rem}
+.team-bio{font-size:.82rem;color:rgba(248,249,255,.45);line-height:1.55;font-weight:300}
+
+/* Admin controls on team card */
+.tc-admin-bar{display:none;position:absolute;top:.6rem;right:.6rem;gap:.4rem;z-index:10}
+body.is-admin .tc-admin-bar{display:flex}
+.tc-btn{width:30px;height:30px;border-radius:8px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:transform .2s,background .2s;line-height:1}
+.tc-edit-btn{background:rgba(0,212,255,.15);color:var(--electric)}
+.tc-edit-btn:hover{background:rgba(0,212,255,.3);transform:scale(1.1)}
+.tc-del-btn{background:rgba(255,107,43,.15);color:var(--orange)}
+.tc-del-btn:hover{background:rgba(255,107,43,.3);transform:scale(1.1)}
+
+/* Team edit modal */
+.team-modal{display:none;position:fixed;inset:0;background:rgba(5,8,20,.95);z-index:2500;align-items:center;justify-content:center;backdrop-filter:blur(14px)}
+.team-modal.open{display:flex}
+.team-modal-box{background:var(--card);border:1px solid rgba(0,212,255,.18);border-radius:24px;width:min(560px,93vw);max-height:90vh;overflow-y:auto;box-shadow:0 40px 100px rgba(0,0,0,.6)}
+.team-modal-header{display:flex;align-items:center;justify-content:space-between;padding:1.8rem 2rem 0}
+.team-modal-header h3{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800}
+.tm-close{background:transparent;border:none;color:rgba(248,249,255,.4);font-size:1.4rem;cursor:pointer;line-height:1;transition:color .2s;padding:.2rem}
+.tm-close:hover{color:var(--white)}
+
+/* Photo upload */
+.tm-photo-area{position:relative;margin:1.5rem 2rem 0;height:200px;border-radius:16px;overflow:hidden;cursor:pointer;border:2px dashed rgba(0,212,255,.2);background:var(--mid);transition:border-color .2s}
+.tm-photo-area:hover{border-color:var(--electric)}
+.tm-photo-area img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.tm-photo-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;color:rgba(248,249,255,.35)}
+.tm-photo-placeholder p{font-size:.9rem;font-weight:500;color:rgba(248,249,255,.5)}
+.tm-photo-placeholder small{font-size:.75rem}
+.tm-photo-overlay{position:absolute;inset:0;background:rgba(10,15,46,.7);display:flex;align-items:center;justify-content:center;color:var(--electric);font-weight:700;font-size:.9rem;opacity:0;transition:opacity .2s;gap:.4rem}
+.tm-photo-area:hover .tm-photo-overlay{opacity:1}
+
+/* Fields */
+.tm-fields{display:grid;grid-template-columns:1fr 1fr;gap:1rem;padding:1.4rem 2rem 0}
+.tm-field label{display:block;font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:rgba(248,249,255,.35);margin-bottom:.4rem}
+.tm-field input,.tm-field textarea{width:100%;background:var(--mid);border:1.5px solid rgba(255,255,255,.08);border-radius:10px;padding:.7rem 1rem;color:var(--white);font-family:'DM Sans',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s;resize:vertical}
+.tm-field input:focus,.tm-field textarea:focus{border-color:var(--electric)}
+
+.tm-modal-actions{display:flex;gap:.8rem;justify-content:flex-end;padding:1.4rem 2rem 2rem}
+.tm-cancel{background:transparent;border:1px solid rgba(255,255,255,.1);color:rgba(248,249,255,.5);padding:.7rem 1.4rem;border-radius:10px;font-family:'DM Sans',sans-serif;font-weight:500;font-size:.9rem;cursor:pointer;transition:background .2s}
+.tm-cancel:hover{background:rgba(255,255,255,.06)}
+.tm-save{background:var(--electric);color:var(--navy);border:none;padding:.7rem 1.8rem;border-radius:10px;font-family:'Syne',sans-serif;font-weight:800;font-size:.9rem;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.tm-save:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,212,255,.3)}
+
+/* ── UNIVERSAL SECTION EDIT BUTTON ── */
+.sec-edit-btn{display:none;align-items:center;gap:.45rem;background:rgba(0,212,255,.1);border:1.5px solid rgba(0,212,255,.25);color:var(--electric);padding:.45rem 1rem;border-radius:100px;font-family:'Syne',sans-serif;font-weight:700;font-size:.78rem;cursor:pointer;transition:background .2s,transform .2s;white-space:nowrap}
+.sec-edit-btn:hover{background:rgba(0,212,255,.22);transform:translateY(-1px)}
+body.is-admin .sec-edit-btn{display:flex}
+.sec-header{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:2.5rem}
+.sec-header-text{flex:1}
+
+/* Item edit/delete controls */
+.item-ctrl{display:none;position:absolute;top:.6rem;right:.6rem;gap:.4rem;z-index:10}
+body.is-admin .item-ctrl{display:flex}
+.ic-btn{width:28px;height:28px;border-radius:7px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.8rem;transition:transform .2s,background .2s;line-height:1}
+.ic-edit{background:rgba(0,212,255,.15);color:var(--electric)}
+.ic-edit:hover{background:rgba(0,212,255,.3);transform:scale(1.1)}
+.ic-del{background:rgba(255,107,43,.15);color:var(--orange)}
+.ic-del:hover{background:rgba(255,107,43,.3);transform:scale(1.1)}
+.ic-add{background:rgba(184,255,60,.12);border:1.5px solid rgba(184,255,60,.25);color:var(--lime);padding:.45rem 1rem;border-radius:100px;font-family:'Syne',sans-serif;font-weight:700;font-size:.78rem;cursor:pointer;display:none;align-items:center;gap:.4rem;white-space:nowrap;transition:background .2s}
+.ic-add:hover{background:rgba(184,255,60,.22)}
+body.is-admin .ic-add{display:flex}
+
+/* ── UNIVERSAL CONTENT MODAL ── */
+.content-modal{display:none;position:fixed;inset:0;background:rgba(5,8,20,.95);z-index:2600;align-items:center;justify-content:center;backdrop-filter:blur(14px)}
+.content-modal.open{display:flex}
+.cm-box{background:var(--card);border:1px solid rgba(0,212,255,.18);border-radius:24px;width:min(580px,94vw);max-height:88vh;overflow-y:auto;box-shadow:0 40px 100px rgba(0,0,0,.6)}
+.cm-header{display:flex;align-items:center;justify-content:space-between;padding:1.6rem 2rem 0}
+.cm-header h3{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:800}
+.cm-close{background:transparent;border:none;color:rgba(248,249,255,.4);font-size:1.4rem;cursor:pointer;line-height:1;transition:color .2s;padding:.2rem}
+.cm-close:hover{color:var(--white)}
+.cm-body{padding:1.4rem 2rem}
+.cm-field{margin-bottom:1.1rem}
+.cm-field label{display:block;font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:rgba(248,249,255,.35);margin-bottom:.4rem}
+.cm-field input,.cm-field textarea,.cm-field select{width:100%;background:var(--mid);border:1.5px solid rgba(255,255,255,.08);border-radius:10px;padding:.7rem 1rem;color:var(--white);font-family:'DM Sans',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s;resize:vertical}
+.cm-field input:focus,.cm-field textarea:focus,.cm-field select:focus{border-color:var(--electric)}
+.cm-field select option{background:var(--mid)}
+.cm-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.cm-actions{display:flex;gap:.8rem;justify-content:flex-end;padding:.8rem 2rem 1.8rem}
+.cm-cancel{background:transparent;border:1px solid rgba(255,255,255,.1);color:rgba(248,249,255,.5);padding:.65rem 1.3rem;border-radius:10px;font-family:'DM Sans',sans-serif;font-weight:500;font-size:.88rem;cursor:pointer;transition:background .2s}
+.cm-cancel:hover{background:rgba(255,255,255,.06)}
+.cm-save{background:var(--electric);color:var(--navy);border:none;padding:.65rem 1.6rem;border-radius:10px;font-family:'Syne',sans-serif;font-weight:800;font-size:.88rem;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.cm-save:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,212,255,.3)}
+
+/* Gallery admin controls */
+.gallery-item{position:relative}
+.gi-ctrl{display:none;position:absolute;top:.5rem;right:.5rem;gap:.35rem;z-index:20}
+body.is-admin .gi-ctrl{display:flex}
+.gi-del{width:26px;height:26px;border-radius:7px;background:rgba(255,107,43,.2);border:1px solid rgba(255,107,43,.3);color:var(--orange);font-size:.8rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.gi-del:hover{background:rgba(255,107,43,.4)}
+.gallery-add-btn{display:none;margin-top:1.5rem}
+body.is-admin .gallery-add-btn{display:flex}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1100px){.gallery-masonry{columns:3}}
+@media(max-width:900px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .how-grid{grid-template-columns:1fr}
+  .impact-grid{grid-template-columns:1fr}
+  .testi-grid{grid-template-columns:1fr}
+  footer{grid-template-columns:1fr 1fr}
+  .hero-visual{display:none}
+  .cta-banner{padding:3rem 2rem}
+  h1{font-size:2.8rem}
+  .about-story{grid-template-columns:1fr}
+  .gallery-masonry{columns:2}
+}
+@media(max-width:600px){
+  .stats{grid-template-columns:1fr 1fr}
+  footer{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .nav-links.open{display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:rgba(10,15,46,.97);padding:1rem 5%;gap:.3rem;border-bottom:1px solid rgba(0,212,255,.12)}
+  .hero-btns{flex-direction:column}
+  .gallery-masonry{columns:1}
+  .resource-grid{grid-template-columns:1fr}
+}
+
+/* ── ADMIN EDIT BUTTONS ── */
+.admin-edit-btn{display:none;align-items:center;gap:.4rem;background:rgba(0,212,255,.1);border:1.5px solid rgba(0,212,255,.25);color:var(--electric);padding:.45rem 1rem;border-radius:100px;font-family:'Syne',sans-serif;font-weight:700;font-size:.78rem;cursor:pointer;transition:background .2s,transform .2s;white-space:nowrap;flex-shrink:0}
+.admin-edit-btn:hover{background:rgba(0,212,255,.22);transform:translateY(-1px)}
+body.is-admin .admin-edit-btn{display:flex}
+.item-del-btn{display:none;position:absolute;top:.55rem;right:.55rem;width:26px;height:26px;border-radius:7px;background:rgba(255,107,43,.18);border:1px solid rgba(255,107,43,.35);color:var(--orange);font-size:.78rem;cursor:pointer;align-items:center;justify-content:center;z-index:20;transition:background .2s;line-height:1}
+.item-del-btn:hover{background:rgba(255,107,43,.4)}
+body.is-admin .item-del-btn{display:flex}
+.item-edit-btn{display:none;position:absolute;top:.55rem;right:2.2rem;width:26px;height:26px;border-radius:7px;background:rgba(0,212,255,.15);border:1px solid rgba(0,212,255,.3);color:var(--electric);font-size:.78rem;cursor:pointer;align-items:center;justify-content:center;z-index:20;transition:background .2s;line-height:1}
+.item-edit-btn:hover{background:rgba(0,212,255,.3)}
+body.is-admin .item-edit-btn{display:flex}
+
+/* ── CONTENT EDITOR MODAL ── */
+.cm-modal{display:none;position:fixed;inset:0;background:rgba(5,8,20,.96);z-index:2600;align-items:center;justify-content:center;backdrop-filter:blur(14px)}
+.cm-modal.open{display:flex}
+.cm-box{background:var(--card);border:1px solid rgba(0,212,255,.18);border-radius:24px;width:min(620px,94vw);max-height:88vh;overflow-y:auto;box-shadow:0 40px 100px rgba(0,0,0,.6)}
+.cm-hdr{display:flex;align-items:center;justify-content:space-between;padding:1.6rem 1.8rem 0}
+.cm-hdr h3{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800}
+.cm-x{background:transparent;border:none;color:rgba(248,249,255,.4);font-size:1.4rem;cursor:pointer;line-height:1;transition:color .2s}
+.cm-x:hover{color:var(--white)}
+.cm-body{padding:1.2rem 1.8rem}
+.cm-items-list{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1rem}
+.cm-item-row{background:var(--mid);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:.85rem 1rem;display:flex;align-items:flex-start;gap:.8rem;transition:border-color .2s}
+.cm-item-row:hover{border-color:rgba(0,212,255,.25)}
+.cm-ir-icon{font-size:1.3rem;flex-shrink:0;margin-top:.1rem}
+.cm-ir-body{flex:1;min-width:0}
+.cm-ir-title{font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;margin-bottom:.15rem}
+.cm-ir-desc{font-size:.76rem;color:rgba(248,249,255,.35);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cm-ir-btns{display:flex;gap:.35rem;flex-shrink:0}
+.cm-ib{width:26px;height:26px;border-radius:7px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.75rem;transition:background .2s;line-height:1}
+.cm-ib-e{background:rgba(0,212,255,.15);color:var(--electric)}
+.cm-ib-e:hover{background:rgba(0,212,255,.3)}
+.cm-ib-d{background:rgba(255,107,43,.15);color:var(--orange)}
+.cm-ib-d:hover{background:rgba(255,107,43,.3)}
+.cm-add-row{background:rgba(184,255,60,.06);border:1.5px dashed rgba(184,255,60,.25);border-radius:12px;padding:.75rem 1rem;display:flex;align-items:center;justify-content:center;gap:.5rem;cursor:pointer;color:var(--lime);font-family:'Syne',sans-serif;font-weight:700;font-size:.85rem;transition:background .2s}
+.cm-add-row:hover{background:rgba(184,255,60,.12)}
+.cm-field{margin-bottom:1rem}
+.cm-field label{display:block;font-size:.74rem;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:rgba(248,249,255,.35);margin-bottom:.4rem}
+.cm-field input,.cm-field textarea,.cm-field select{width:100%;background:var(--mid);border:1.5px solid rgba(255,255,255,.08);border-radius:10px;padding:.65rem 1rem;color:var(--white);font-family:'DM Sans',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s;resize:vertical}
+.cm-field input:focus,.cm-field textarea:focus,.cm-field select:focus{border-color:var(--electric)}
+.cm-field select option{background:var(--mid)}
+.cm-2col{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.cm-photo-pick{position:relative;height:130px;border-radius:12px;overflow:hidden;border:2px dashed rgba(0,212,255,.2);background:var(--mid);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.3rem;transition:border-color .2s;margin-bottom:.5rem}
+.cm-photo-pick:hover{border-color:var(--electric)}
+.cm-photo-pick img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cm-photo-lbl{font-size:.8rem;color:rgba(248,249,255,.4);position:relative;z-index:1}
+.cm-photo-icon{font-size:1.8rem;position:relative;z-index:1}
+.cm-actions{display:flex;gap:.7rem;justify-content:flex-end;padding:.5rem 1.8rem 1.6rem}
+.cm-btn-cancel{background:transparent;border:1px solid rgba(255,255,255,.1);color:rgba(248,249,255,.5);padding:.62rem 1.3rem;border-radius:10px;font-family:'DM Sans',sans-serif;font-weight:500;font-size:.88rem;cursor:pointer;transition:background .2s}
+.cm-btn-cancel:hover{background:rgba(255,255,255,.06)}
+.cm-btn-save{background:var(--electric);color:var(--navy);border:none;padding:.62rem 1.6rem;border-radius:10px;font-family:'Syne',sans-serif;font-weight:800;font-size:.88rem;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.cm-btn-save:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,212,255,.3)}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <a class="logo" onclick="showPage('home')">Smart<span>Tech</span> Hub</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a onclick="showPage('home')" data-page="home" class="active">Home</a></li>
+    <li><a onclick="showPage('about')" data-page="about">About</a></li>
+    <li><a onclick="showPage('gallery')" data-page="gallery">Gallery</a></li>
+    <li><a onclick="showPage('resources')" data-page="resources">Resources</a></li>
+    <li><a onclick="showPage('home');setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),100)" class="nav-cta">Partner With Us</a></li>
+    <li><div class="admin-nav-badge" id="adminNavBadge" onclick="logoutAdmin()"><span class="admin-dot"></span> Admin Mode</div></li>
+    <li id="adminLoginLi"><a onclick="openAdminLogin()" style="color:rgba(248,249,255,.35);font-size:.8rem">🔐 Admin</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleMenu()" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     HOME PAGE
+════════════════════════════════════════ -->
+<div id="page-home" class="page active">
+
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="grid-lines"></div>
+    <div class="hero-content">
+      <div class="hero-badge">🚀 Now partnering with 40+ schools</div>
+      <h1>Building<br>Tomorrow's<br><span class="accent">Innovators</span><br><span class="accent2">Today</span></h1>
+      <p class="hero-sub">Smart Tech Innovation Hub partners with schools to give every child hands-on experience in Robotics, IoT, Drone Technology, and real-world problem solving through STEM.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="showPage('home');setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),100)">🎓 Partner With Us</button>
+        <button class="btn-outline" onclick="showPage('home');setTimeout(()=>document.getElementById('programs').scrollIntoView({behavior:'smooth'}),100)">Explore Programs →</button>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-cards">
+        <div class="hero-card">
+          <img src="https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=800&q=80" alt="Children learning STEM">
+          <div class="hero-card-label">🤖 Robotics Lab</div>
+        </div>
+        <div class="hero-card">
+          <img src="https://images.unsplash.com/photo-1604999565976-8913ad2ddb37?w=400&q=80" alt="Drone">
+          <div class="hero-card-label">🚁 Drones</div>
+        </div>
+        <div class="hero-card">
+          <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=400&q=80" alt="IoT">
+          <div class="hero-card-label">📡 IoT</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div style="position:relative">
+    <div class="stats" id="statsGrid"></div>
+    <button class="admin-edit-btn" onclick="openSectionEditor('stats')" style="position:absolute;top:1rem;right:5%;z-index:10">&#x270F;&#xFE0F; Edit Stats</button>
+  </div>
+
+  <section id="programs">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:2rem">
+      <div><div class="section-label">What We Teach</div><h2>Our <span class="text-electric">STEM Programs</span></h2></div>
+      <button class="admin-edit-btn" onclick="openSectionEditor('programs')">&#x270F;&#xFE0F; Edit Programs</button>
+    </div>
+    <div class="programs-grid" id="programsGrid"></div>
+  </section>
+
+  <section class="how" id="how">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:2rem">
+      <div><div class="section-label">The Process</div><h2>How We <span class="text-lime">Partner</span> With Schools</h2></div>
+      <button class="admin-edit-btn" onclick="openSectionEditor('how')">&#x270F;&#xFE0F; Edit Steps</button>
+    </div>
+    <div class="how-grid">
+      <div id="howStepsGrid"></div>
+      <div class="how-visual reveal" style="position:relative">
+        <button class="admin-edit-btn" onclick="openSectionEditor('howimg')" style="position:absolute;top:.8rem;right:.8rem;z-index:10">&#x270F;&#xFE0F; Change Image</button>
+        <div class="how-img-wrap">
+          <img id="howSideImg" src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=700&q=80" alt="STEM class">
+          <div class="floating-badge one" id="howBadgeOne">&#x1F680; Launch Ready</div>
+          <div class="floating-badge two" id="howBadgeTwo">&#x2713; No Setup Cost</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="impact">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:2rem">
+      <div><div class="section-label">Our Impact</div><h2>Why STEM <span class="text-orange">Matters</span> Now</h2></div>
+      <button class="admin-edit-btn" onclick="openSectionEditor('impact')">&#x270F;&#xFE0F; Edit Cards</button>
+    </div>
+    <div class="impact-grid" id="impactGrid"></div>
+  </section>
+
+  <section class="testimonials">
+    <div class="section-label">Testimonials</div>
+    <h2>Voices From <span class="text-electric">Our Community</span></h2>
+    <div class="testi-grid">
+      <div class="testi-card reveal"><div class="testi-stars">★★★★★</div><p class="testi-text">"The drone program transformed how our students engage with science. They come in on weekends now — voluntarily — because they're so excited about what they're building."</p><div class="testi-author"><div class="testi-avatar">AM</div><div><div class="testi-name">Amara Mensah</div><div class="testi-role">Principal, Greenfield Academy</div></div></div></div>
+      <div class="testi-card reveal"><div class="testi-stars">★★★★★</div><p class="testi-text">"My daughter used to say she hated math. After three months in IoT, she's teaching me about circuits and asking for her own Raspberry Pi for Christmas. Incredible."</p><div class="testi-author"><div class="testi-avatar">JO</div><div><div class="testi-name">James Okafor</div><div class="testi-role">Parent, Grade 7 Student</div></div></div></div>
+      <div class="testi-card reveal"><div class="testi-stars">★★★★★</div><p class="testi-text">"Smart Tech handled everything — they brought the equipment, taught the sessions, and organized our school's first STEM Demo Day. Our parents were blown away."</p><div class="testi-author"><div class="testi-avatar">SC</div><div><div class="testi-name">Sarah Conteh</div><div class="testi-role">STEM Coordinator, Bright Future School</div></div></div></div>
+    </div>
+  </section>
+
+  <section class="partners-section">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1rem">
+      <div>
+        <div class="section-label">School Partners</div>
+        <h2>Trusted by <span class="text-lime">Leading Schools</span></h2>
+        <p style="color:rgba(248,249,255,.4);margin-top:.8rem;font-size:.95rem;font-weight:300">Join the growing network of forward-thinking institutions investing in STEM excellence.</p>
+      </div>
+      <button class="admin-edit-btn" onclick="openSectionEditor('partners')">&#x270F;&#xFE0F; Edit Schools</button>
+    </div>
+    <div class="partners-row" id="partnersRow"></div>
+  </section>
+
+  <div class="cta-banner reveal" id="contact">
+    <h2>Ready to Bring STEM to Your School?</h2>
+    <p>Let's build a custom program that excites your students and impresses your community. No upfront costs. Full support from day one.</p>
+    <a href="/cdn-cgi/l/email-protection#b8d0ddd4d4d7f8cbd5d9caccccdddbd0d0cdda96dddccd" class="btn-dark">📩 Request a Partnership Call</a>
+  </div>
+
+</div><!-- end page-home -->
+
+
+<!-- ═══════════════════════════════════════
+     ABOUT PAGE
+════════════════════════════════════════ -->
+<div id="page-about" class="page">
+
+  <div class="page-hero">
+    <div class="page-hero-bg"></div>
+    <div class="grid-lines"></div>
+    <div class="page-hero-inner">
+      <div class="section-label" style="justify-content:center">Who We Are</div>
+      <h2>Igniting <span class="text-electric">Curiosity</span>,<br>Powering <span class="text-lime">Futures</span></h2>
+      <p>Smart Tech Innovation Hub was founded on one powerful belief: every child, regardless of background, deserves access to world-class STEM education that prepares them for the challenges and opportunities of tomorrow.</p>
+    </div>
+  </div>
+
+  <section style="position:relative">
+    <button class="admin-edit-btn" onclick="openSectionEditor('story')" style="position:absolute;top:1.5rem;right:5%;z-index:10">&#x270F;&#xFE0F; Edit Story</button>
+    <div class="about-story reveal">
+      <div class="about-story-img" style="position:relative;cursor:pointer" onclick="isAdmin&&openStoryImagePicker()" id="storyImgWrap">
+        <img id="storyImg" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=700&q=80" alt="Founder teaching STEM">
+        <div id="storyImgOverlay" style="display:none;position:absolute;inset:0;background:rgba(0,212,255,.15);align-items:center;justify-content:center;font-family:Syne,sans-serif;font-weight:700;font-size:.85rem;color:var(--electric);gap:.4rem;border-radius:24px">&#x1F4F7; Change Photo</div>
+        <input type="file" id="storyImgInput" accept="image/*" style="display:none" onchange="handleStoryImg(this)">
+      </div>
+      <div class="about-story-text">
+        <div class="section-label">Our Story</div>
+        <h2 id="storyHeading">Born in a <span class="text-orange">Classroom</span>,<br>Built for the World</h2>
+        <div id="storyParas">
+          <p>It started with a simple observation: students were disengaged, not because they lacked intelligence, but because learning felt disconnected from the real world. Our founder saw children light up the moment they held a circuit board, piloted a drone, or watched a robot they built come to life.</p>
+          <p>From that spark, Smart Tech Innovation Hub grew into a full-scale STEM partnership organization — working alongside school principals, teachers, and parents to deliver programs that don't just teach technology, but develop problem-solvers, critical thinkers, and future leaders.</p>
+          <p>Today we serve thousands of students across dozens of schools, and we're just getting started.</p>
+        </div>
+        <button class="btn-electric" style="margin-top:1rem" onclick="showPage('home');setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),100)">Join Our Mission →</button>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--mid);padding:6rem 5%">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:2rem">
+      <div><div class="section-label">What Drives Us</div><h2>Our Core <span class="text-lime">Values</span></h2></div>
+      <button class="admin-edit-btn" onclick="openSectionEditor('values')">&#x270F;&#xFE0F; Edit Values</button>
+    </div>
+    <div class="values-grid" id="valuesGrid"></div>
+  </section>
+
+  <section class="team-section" id="teamSection">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:2.5rem">
+      <div>
+        <div class="section-label">The Team</div>
+        <h2>Meet the People <span class="text-electric">Behind the Mission</span></h2>
+      </div>
+      <button class="add-member-btn" id="addMemberBtn" onclick="openAddMember()" title="Add team member">+ Add Member</button>
+    </div>
+    <div class="team-grid" id="teamGrid">
+      <!-- Rendered by JS -->
+    </div>
+  </section>
+
+  <!-- Team Member Edit Modal -->
+  <div class="team-modal" id="teamModal">
+    <div class="team-modal-box">
+      <div class="team-modal-header">
+        <h3 id="teamModalTitle">Edit Team Member</h3>
+        <button class="tm-close" onclick="closeTeamModal()">✕</button>
+      </div>
+
+      <!-- Photo upload area -->
+      <div class="tm-photo-area" id="tmPhotoArea" onclick="document.getElementById('tmPhotoInput').click()">
+        <img id="tmPhotoPreview" src="" alt="" style="display:none">
+        <div class="tm-photo-placeholder" id="tmPhotoPlaceholder">
+          <span style="font-size:2.5rem">📷</span>
+          <p>Click to upload photo</p>
+          <small>JPG, PNG, WEBP — recommended 400×400px</small>
+        </div>
+        <div class="tm-photo-overlay">📷 Change Photo</div>
+        <input type="file" id="tmPhotoInput" accept="image/*" style="display:none" onchange="handleTeamPhoto(this)">
+      </div>
+
+      <div class="tm-fields">
+        <div class="tm-field">
+          <label>Full Name</label>
+          <input type="text" id="tmName" placeholder="e.g. David Kamara">
+        </div>
+        <div class="tm-field">
+          <label>Job Title / Role</label>
+          <input type="text" id="tmRole" placeholder="e.g. Founder & CEO">
+        </div>
+        <div class="tm-field" style="grid-column:span 2">
+          <label>Bio</label>
+          <textarea id="tmBio" rows="3" placeholder="Brief biography of this team member..."></textarea>
+        </div>
+      </div>
+
+      <div class="tm-modal-actions">
+        <button class="tm-cancel" onclick="closeTeamModal()">Cancel</button>
+        <button class="tm-save" onclick="saveTeamMember()">💾 Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <section class="milestones">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:2rem">
+      <div><div class="section-label">Our Journey</div><h2>Key <span class="text-orange">Milestones</span></h2></div>
+      <button class="admin-edit-btn" onclick="openSectionEditor('milestones')">&#x270F;&#xFE0F; Edit Milestones</button>
+    </div>
+    <div class="timeline" id="milestonesGrid"></div>
+  </section>
+
+  <div class="cta-banner reveal" style="margin:0 5% 6rem">
+    <h2>Want to Be Part of the Story?</h2>
+    <p>Whether you're a school, sponsor, or STEM enthusiast — there's a place for you in our mission.</p>
+    <button class="btn-dark" onclick="showPage('home');setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),100)">📩 Get in Touch Today</button>
+  </div>
+
+</div><!-- end page-about -->
+
+
+<!-- ═══════════════════════════════════════
+     GALLERY PAGE
+════════════════════════════════════════ -->
+<div id="page-gallery" class="page">
+
+  <div class="page-hero" style="padding-bottom:2rem">
+    <div class="page-hero-bg"></div>
+    <div class="grid-lines"></div>
+    <div class="page-hero-inner" style="position:relative">
+      <div class="section-label" style="justify-content:center">Photo Gallery</div>
+      <h2 id="galleryHeroTitle">See the <span class="text-lime">Magic</span> in Action</h2>
+      <p id="galleryHeroDesc">Every image tells a story of a child discovering something extraordinary about themselves and the world around them.</p>
+      <button class="admin-edit-btn" onclick="openSectionEditor('galleryhero')" style="margin:1.2rem auto 0;justify-content:center">&#x270F;&#xFE0F; Edit Heading</button>
+    </div>
+  </div>
+
+  <section style="padding-top:2rem">
+    <div class="gallery-filters">
+      <button class="filter-btn active" onclick="filterGallery('all',this)">All Photos</button>
+      <button class="filter-btn" onclick="filterGallery('robotics',this)">🤖 Robotics</button>
+      <button class="filter-btn" onclick="filterGallery('drones',this)">🚁 Drones</button>
+      <button class="filter-btn" onclick="filterGallery('iot',this)">📡 IoT</button>
+      <button class="filter-btn" onclick="filterGallery('coding',this)">💻 Coding</button>
+      <button class="filter-btn" onclick="filterGallery('events',this)">🎉 Events</button>
+    </div>
+
+    <div style="display:flex;justify-content:flex-end;margin-bottom:1rem">
+      <button class="admin-edit-btn" onclick="openAddPhoto()">&#x1F4F7; Add Photo</button>
+    </div>
+    <div class="gallery-masonry" id="galleryGrid"></div>
+  </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lb-close" onclick="closeLightbox()">✕</button>
+    <button class="lb-nav lb-prev" onclick="changeLb(-1)">‹</button>
+    <img id="lbImg" src="" alt="">
+    <button class="lb-nav lb-next" onclick="changeLb(1)">›</button>
+    <div class="lb-caption" id="lbCaption"></div>
+  </div>
+
+</div><!-- end page-gallery -->
+
+
+<!-- ═══════════════════════════════════════
+     RESOURCES PAGE
+════════════════════════════════════════ -->
+<div id="page-resources" class="page">
+
+  <div class="page-hero">
+    <div class="page-hero-bg"></div>
+    <div class="grid-lines"></div>
+    <div class="page-hero-inner">
+      <div class="section-label" style="justify-content:center">Learning Resources</div>
+      <h2>Our <span class="text-electric">Resource</span> Library</h2>
+      <p>Videos, books, guides, and learning materials — all in one place for students, teachers, and partner schools.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="resources-tabs">
+      <button class="res-tab active" onclick="switchTab('videos',this)">🎬 Videos</button>
+      <button class="res-tab" onclick="switchTab('books',this)">📚 Books & Guides</button>
+      <button class="res-tab upload-tab-btn" onclick="switchTab('upload',this)">⬆ Upload</button>
+    </div>
+
+    <!-- VIDEOS PANEL -->
+    <div class="res-panel active" id="tab-videos">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem">
+        <div>
+          <h3 style="font-size:1.2rem;margin-bottom:.3rem">Video Lessons</h3>
+          <p style="font-size:.88rem;color:rgba(248,249,255,.4);font-weight:300" id="video-count">6 videos available</p>
+        </div>
+        <input type="text" placeholder="🔍 Search videos..." oninput="searchResources('video',this.value)" style="background:var(--card);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:.6rem 1.2rem;color:var(--white);font-family:'DM Sans',sans-serif;font-size:.88rem;width:240px;outline:none">
+      </div>
+      <div class="resource-grid" id="videoGrid">
+        <!-- Videos rendered by JS -->
+      </div>
+    </div>
+
+    <!-- BOOKS PANEL -->
+    <div class="res-panel" id="tab-books">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem">
+        <div>
+          <h3 style="font-size:1.2rem;margin-bottom:.3rem">Books & Guides</h3>
+          <p style="font-size:.88rem;color:rgba(248,249,255,.4);font-weight:300" id="book-count">8 resources available</p>
+        </div>
+        <input type="text" placeholder="🔍 Search books..." oninput="searchResources('book',this.value)" style="background:var(--card);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:.6rem 1.2rem;color:var(--white);font-family:'DM Sans',sans-serif;font-size:.88rem;width:240px;outline:none">
+      </div>
+      <div class="resource-grid" id="bookGrid">
+        <!-- Books rendered by JS -->
+      </div>
+    </div>
+
+    <!-- UPLOAD PANEL -->
+    <div class="res-panel" id="tab-upload">
+      <div style="max-width:700px;margin:0 auto">
+        <h3 style="font-size:1.3rem;margin-bottom:.5rem">Upload New Resource</h3>
+        <p style="font-size:.9rem;color:rgba(248,249,255,.4);font-weight:300;margin-bottom:2rem">Share videos, PDFs, e-books, or guides with students and partner schools.</p>
+
+        <div id="uploadProgressArea"></div>
+
+        <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+          <div class="upload-icon">☁️</div>
+          <h3>Drag & Drop Your Files Here</h3>
+          <p>Supports MP4, MOV, AVI, PDF, EPUB, DOCX, PNG, JPG</p>
+          <input type="file" id="fileInput" multiple accept=".mp4,.mov,.avi,.pdf,.epub,.docx,.doc,.png,.jpg,.jpeg" onchange="handleFiles(this.files)">
+          <div class="upload-btn" onclick="event.stopPropagation();document.getElementById('fileInput').click()">📁 Browse Files</div>
+        </div>
+
+        <div style="background:var(--card);border-radius:16px;padding:1.8rem;margin-top:1.5rem">
+          <h4 style="font-family:'Syne',sans-serif;font-size:1rem;margin-bottom:1.2rem">Resource Details</h4>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+            <div>
+              <label style="font-size:.8rem;color:rgba(248,249,255,.4);font-weight:500;display:block;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.08em">Title</label>
+              <input type="text" id="resTitle" placeholder="e.g. Introduction to Robotics" style="width:100%;background:var(--mid);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:.7rem 1rem;color:var(--white);font-family:'DM Sans',sans-serif;font-size:.9rem;outline:none">
+            </div>
+            <div>
+              <label style="font-size:.8rem;color:rgba(248,249,255,.4);font-weight:500;display:block;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.08em">Category</label>
+              <select id="resCategory" style="width:100%;background:var(--mid);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:.7rem 1rem;color:var(--white);font-family:'DM Sans',sans-serif;font-size:.9rem;outline:none">
+                <option value="robotics">Robotics</option>
+                <option value="iot">IoT</option>
+                <option value="drones">Drone Piloting</option>
+                <option value="coding">Coding & AI</option>
+                <option value="3d">3D Design</option>
+                <option value="general">General STEM</option>
+              </select>
+            </div>
+          </div>
+          <div style="margin-top:1rem">
+            <label style="font-size:.8rem;color:rgba(248,249,255,.4);font-weight:500;display:block;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.08em">Description</label>
+            <textarea id="resDesc" placeholder="Brief description of this resource..." rows="3" style="width:100%;background:var(--mid);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:.7rem 1rem;color:var(--white);font-family:'DM Sans',sans-serif;font-size:.9rem;outline:none;resize:vertical"></textarea>
+          </div>
+          <div style="margin-top:1rem;display:flex;align-items:center;gap:.6rem">
+            <input type="checkbox" id="resPublic" style="width:16px;height:16px;accent-color:var(--electric)">
+            <label for="resPublic" style="font-size:.88rem;color:rgba(248,249,255,.6)">Make visible to all students and teachers</label>
+          </div>
+          <button class="btn-electric" style="margin-top:1.5rem;width:100%;justify-content:center" onclick="submitUpload()">⬆ Upload Resource</button>
+        </div>
+
+        <div style="background:var(--card);border-radius:16px;padding:1.5rem;margin-top:1.2rem;border:1px solid rgba(184,255,60,.1)">
+          <h4 style="font-family:'Syne',sans-serif;font-size:.9rem;color:var(--lime);margin-bottom:.8rem">📋 Upload Guidelines</h4>
+          <p style="font-size:.85rem;color:rgba(248,249,255,.4);line-height:1.7;font-weight:300">Videos: MP4, MOV, AVI — max 500MB. Books & Guides: PDF, EPUB, DOCX — max 50MB. All content is reviewed before being made public to ensure it meets our educational standards. Uploaded files appear in the relevant tab after review.</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</div><!-- end page-resources -->
+
+
+<!-- ═══ SHARED FOOTER ═══ -->
+<footer id="siteFooter">
+  <div class="footer-brand">
+    <div class="logo" style="font-size:1.2rem" onclick="showPage('home')">Smart<span style="color:var(--electric)">Tech</span> Hub</div>
+    <p>Empowering children through hands-on STEM education in partnership with schools. Building tomorrow's innovators — today.</p>
+  </div>
+  <div class="footer-col">
+    <h5>Programs</h5>
+    <a>Robotics</a><a>IoT</a><a>Drone Piloting</a><a>Coding & AI</a><a>3D Fabrication</a>
+  </div>
+  <div class="footer-col">
+    <h5>Company</h5>
+    <a onclick="showPage('about')">About Us</a>
+    <a onclick="showPage('about')">Our Team</a>
+    <a onclick="showPage('gallery')">Gallery</a>
+    <a onclick="showPage('resources')">Resources</a>
+  </div>
+  <div class="footer-col">
+    <h5>Contact</h5>
+    <a href="/cdn-cgi/l/email-protection#f79f929b9b98b7849a9685838392949f9f8295d9929382"><span class="__cf_email__" data-cfemail="741c1118181b3407191506000011171c1c01165a111001">[email&#160;protected]</span></a>
+    <a href="tel:+18007836482">+1 (800) STEM-HUB</a>
+    <a onclick="showPage('home');setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),100)">Request a Demo</a>
+    <a onclick="showPage('home');setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),100)">Become a Partner</a>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <p>© 2025 Smart Tech Innovation Hub. All rights reserved.</p>
+  <div class="social-links">
+    <a class="social-link" aria-label="Twitter">𝕏</a>
+    <a class="social-link" aria-label="LinkedIn">in</a>
+    <a class="social-link" aria-label="Instagram">◎</a>
+    <a class="social-link" aria-label="YouTube">▶</a>
+  </div>
+</div>
+
+
+<!-- ═══ UNIVERSAL CONTENT EDITOR MODAL ═══ -->
+<div class="cm-modal" id="cmModal">
+  <div class="cm-box">
+    <div class="cm-hdr">
+      <h3 id="cmTitle">Edit Section</h3>
+      <button class="cm-x" onclick="closeCM()">✕</button>
+    </div>
+    <div class="cm-body" id="cmBody"></div>
+    <div class="cm-actions">
+      <button class="cm-btn-cancel" onclick="closeCM()">Cancel</button>
+      <button class="cm-btn-save" id="cmSaveBtn" onclick="saveCM()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ADD GALLERY PHOTO MODAL ═══ -->
+<div class="cm-modal" id="photoModal">
+  <div class="cm-box" style="max-width:480px">
+    <div class="cm-hdr">
+      <h3>📷 Add Photo to Gallery</h3>
+      <button class="cm-x" onclick="closePhotoModal()">✕</button>
+    </div>
+    <div class="cm-body">
+      <div class="cm-photo-pick" id="photoPickArea" onclick="document.getElementById('photoFileIn').click()">
+        <img id="photoPickPreview" src="" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+        <span class="cm-photo-icon" id="photoPickIcon">🖼️</span>
+        <span class="cm-photo-lbl" id="photoPickLbl">Click to upload photo</span>
+        <input type="file" id="photoFileIn" accept="image/*" style="display:none" onchange="handleGalleryPhotoFile(this)">
+      </div>
+      <div style="margin-top:1rem">
+        <div class="cm-field"><label>Caption</label><input type="text" id="photoCaptionIn" placeholder="e.g. Robotics Build Session"></div>
+        <div class="cm-field"><label>Category</label>
+          <select id="photoCatIn">
+            <option value="robotics">Robotics</option>
+            <option value="drones">Drones</option>
+            <option value="iot">IoT</option>
+            <option value="coding">Coding</option>
+            <option value="events">Events</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="cm-actions">
+      <button class="cm-btn-cancel" onclick="closePhotoModal()">Cancel</button>
+      <button class="cm-btn-save" onclick="saveGalleryPhoto()">Add to Gallery</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ADMIN LOGIN MODAL ═══ -->
+<div class="admin-modal" id="adminModal">
+  <div class="admin-box">
+    <div class="admin-box-header">
+      <div class="admin-lock">🔐</div>
+      <h3>Admin Access</h3>
+      <p class="sub">Sign in to manage and edit all content</p>
+    </div>
+    <div class="admin-field"><label>Username</label><input type="text" id="adminUser" placeholder="Enter username" autocomplete="off"></div>
+    <div class="admin-field"><label>Password</label><input type="password" id="adminPass" placeholder="Enter password"></div>
+    <p class="admin-err" id="adminErr">Incorrect username or password.</p>
+    <button class="admin-submit" onclick="doAdminLogin()">Sign In as Admin</button>
+    <span class="admin-cancel" onclick="closeAdminLogin()">Cancel</span>
+    <p class="admin-hint">Username: <strong style="color:rgba(248,249,255,.5)">admin</strong> &nbsp;|&nbsp; Password: <strong style="color:rgba(248,249,255,.5)">stemhub2025</strong><br><span style="color:rgba(248,249,255,.15)">(Change before going live)</span></p>
+  </div>
+</div>
+
+<!-- ═══ DELETE CONFIRM MODAL ═══ -->
+<div class="del-modal" id="delModal">
+  <div class="del-box">
+    <div class="del-icon">🗑️</div>
+    <h4>Delete this item?</h4>
+    <p id="delModalDesc">This cannot be undone.</p>
+    <div class="del-box-btns">
+      <button class="del-cancel-btn" onclick="closeDelModal()">Cancel</button>
+      <button class="del-confirm" id="delConfirmBtn">Yes, Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TEAM MEMBER MODAL ═══ -->
+<div class="team-modal" id="teamModal">
+  <div class="team-modal-box">
+    <div class="team-modal-header">
+      <h3 id="teamModalTitle">Edit Team Member</h3>
+      <button class="tm-close" onclick="closeTeamModal()">✕</button>
+    </div>
+    <div class="tm-photo-area" id="tmPhotoArea" onclick="document.getElementById('tmPhotoInput').click()">
+      <img id="tmPhotoPreview" src="" alt="" style="display:none">
+      <div class="tm-photo-placeholder" id="tmPhotoPlaceholder">
+        <span style="font-size:2.5rem">📷</span>
+        <p>Click to upload photo</p>
+        <small>JPG, PNG, WEBP recommended</small>
+      </div>
+      <div class="tm-photo-overlay">📷 Change Photo</div>
+      <input type="file" id="tmPhotoInput" accept="image/*" style="display:none" onchange="handleTeamPhoto(this)">
+    </div>
+    <div class="tm-fields">
+      <div class="tm-field"><label>Full Name</label><input type="text" id="tmName" placeholder="e.g. David Kamara"></div>
+      <div class="tm-field"><label>Job Title</label><input type="text" id="tmRole" placeholder="e.g. Founder & CEO"></div>
+      <div class="tm-field" style="grid-column:span 2"><label>Bio</label><textarea id="tmBio" rows="3" placeholder="Brief biography..."></textarea></div>
+    </div>
+    <div class="tm-modal-actions">
+      <button class="tm-cancel" onclick="closeTeamModal()">Cancel</button>
+      <button class="tm-save" onclick="saveTeamMember()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ADMIN MODE BAR ═══ -->
+<div class="admin-mode-bar" id="adminModeBar">
+  <span>Shield Admin Mode Active — You can edit all sections and manage content</span>
+  <button class="admin-logout-btn" onclick="logoutAdmin()">Log Out</button>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"><span class="toast-icon" id="toastIcon"></span><span id="toastMsg"></span></div>
+
+<script>
+// ── CREDENTIALS ──
+var ADMIN_USER='admin', ADMIN_PASS='stemhub2025', isAdmin=false;
+
+// ── SECTION DATA ──
+var sectionData={
+  programs:[
+    {icon:'🤖',title:'Robotics Engineering',desc:'Students design, build, and program physical robots — learning mechanical principles, electronics, and coding through hands-on challenges and competitions.',tag1:'Ages 8–18',tag2:'Beginner → Advanced',img:'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&q=80',color:'electric'},
+    {icon:'📡',title:'Internet of Things (IoT)',desc:'Dive into the connected world — students build smart sensors, home automation gadgets, and environmental monitors using Arduino, Raspberry Pi, and cloud platforms.',tag1:'Ages 10–18',tag2:'Project-Based',img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80',color:'lime'},
+    {icon:'🚁',title:'Drone Piloting & Design',desc:'From flight safety to aerial mapping — students learn to fly, program autonomous drones, and explore applications in agriculture, search & rescue, and filmmaking.',tag1:'Ages 10–18',tag2:'Outdoor + Indoor',img:'https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=600&q=80',color:'orange'},
+    {icon:'💻',title:'Coding & AI Fundamentals',desc:'From block-based coding to Python and machine learning basics — students build apps, games, and AI models that solve real community challenges.',tag1:'Ages 6–18',tag2:'Scratch → Python',img:'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&q=80',color:'electric'},
+    {icon:'🖨️',title:'3D Design & Fabrication',desc:'Students prototype physical solutions using CAD software and 3D printing — turning ideas for solving everyday problems into tangible objects they can hold.',tag1:'Ages 9–18',tag2:'Maker Mindset',img:'https://images.unsplash.com/photo-1565043666747-69f6646db940?w=600&q=80',color:'lime'},
+    {icon:'🌍',title:'Real-World Problem Solving',desc:'Our flagship program brings all STEM disciplines together to tackle local challenges — from clean water to smart traffic. Students pitch to real panels.',tag1:'All Ages',tag2:'Cross-disciplinary',img:'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&q=80',color:'orange'}
+  ],
+  how:[
+    {num:'01',title:'Discovery & Needs Assessment',desc:'We meet with your school leadership to understand your curriculum, student demographics, available spaces, and learning goals.'},
+    {num:'02',title:'Custom Program Design',desc:'Our curriculum specialists tailor a STEM program that integrates with your academic calendar and aligns with national standards.'},
+    {num:'03',title:'Equipment & Setup',desc:'We supply all kits, devices, software, and safety equipment — no capital investment required from the school.'},
+    {num:'04',title:'Hands-On Learning Begins',desc:'Certified instructors lead weekly sessions at your school, running exciting project-based challenges students love.'},
+    {num:'05',title:'Showcase & Celebrate',desc:'Students present at end-of-term Demo Days, inviting parents, community members, and potential sponsors.'}
+  ],
+  impact:[
+    {emoji:'🧠',title:'Critical Thinking',desc:'Students in project-based STEM show a 40% improvement in analytical reasoning. Our programs are built around solving real problems, not textbook exercises.',cls:'c1'},
+    {emoji:'💼',title:'Future-Proof Careers',desc:"65% of today's students will work in jobs that don't exist yet. Our programs ensure children are equipped with adaptable, technology-forward skills.",cls:'c2'},
+    {emoji:'🌍',title:'Community Problem Solvers',desc:'From flood-warning systems to apps for local farmers — our students are creating solutions for real challenges in their own communities.',cls:'c3'}
+  ],
+  partners:['Greenfield Academy','Bright Future School','Unity International School','Horizon Primary','Discovery High School','Pioneer College','New Generation Academy','Sunrise Community School'],
+  values:[
+    {icon:'🔬',title:'Curiosity First',desc:"We design every program to spark genuine wonder. When students ask \"why?\" and \"what if?\", we know we've succeeded."},
+    {icon:'🤝',title:'Inclusive Access',desc:'STEM is for everyone. We partner with schools in underserved communities to ensure no child is left behind in the technology revolution.'},
+    {icon:'⚡',title:'Hands-On Learning',desc:'No passive listening. Every session is active, tactile, and project-based — because real learning happens by doing.'},
+    {icon:'🌱',title:'Real-World Impact',desc:'Our programs connect students to actual community challenges, so they understand that their skills can change lives.'},
+    {icon:'🏆',title:'Excellence Always',desc:'We hold ourselves to the highest standards — in curriculum design, instructor quality, and the experiences we deliver.'},
+    {icon:'🔄',title:'Continuous Growth',desc:'Technology evolves fast. So do we. Our programs are constantly updated to reflect the latest in STEM education and industry needs.'}
+  ],
+  milestones:[
+    {year:'2019',title:'Founded with a Vision',desc:'Smart Tech Innovation Hub launched with a single pilot program at one school, serving 45 students in robotics and basic coding.'},
+    {year:'2020',title:'First School Partnerships',desc:'Despite a challenging year, we expanded to 8 schools by rapidly adapting our curriculum for hybrid and in-person delivery.'},
+    {year:'2021',title:'Drone Program Launched',desc:'Introduced our flagship drone piloting program — the first of its kind in the region for K–12 students. 200+ students certified in Year 1.'},
+    {year:'2022',title:'IoT & Maker Labs Rollout',desc:'Partnered with hardware suppliers to equip 15 schools with dedicated IoT maker labs, reaching 800+ students in one academic year.'},
+    {year:'2023',title:'1,000 Students Milestone',desc:'Hit our first major milestone: 1,000 students enrolled across active programs. Launched our first inter-school STEM Olympics competition.'},
+    {year:'2024',title:'2,500 Students & Counting',desc:'Now serving 2,500+ students across 40+ schools, with plans to expand nationally and launch an online learning platform.'}
+  ],
+  stats:[
+    {num:'2,500+', label:'Students Reached'},
+    {num:'40+',   label:'Partner Schools'},
+    {num:'6',     label:'STEM Programs'},
+    {num:'95%',   label:'Student Satisfaction'}
+  ],
+  howimg:{
+    src:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=700&q=80',
+    badge1:'🚀 Launch Ready',
+    badge2:'✓ No Setup Cost'
+  },
+  story:{
+    img:'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=700&q=80',
+    heading:'Born in a Classroom, Built for the World',
+    p1:"It started with a simple observation: students were disengaged, not because they lacked intelligence, but because learning felt disconnected from the real world. Our founder saw children light up the moment they held a circuit board, piloted a drone, or watched a robot they built come to life.",
+    p2:"From that spark, Smart Tech Innovation Hub grew into a full-scale STEM partnership organization — working alongside school principals, teachers, and parents to deliver programs that don't just teach technology, but develop problem-solvers, critical thinkers, and future leaders.",
+    p3:"Today we serve thousands of students across dozens of schools, and we're just getting started."
+  },
+  galleryhero:{
+    title:'See the Magic in Action',
+    desc:'Every image tells a story of a child discovering something extraordinary about themselves and the world around them.'
+  },
+  gallery:[
+    {src:'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&q=80',full:'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1200&q=90',cap:'Robotics Build Session',cat:'robotics'},
+    {src:'https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=600&q=80',full:'https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=1200&q=90',cap:'Drone Flight Training',cat:'drones'},
+    {src:'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&q=80',full:'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1200&q=90',cap:'Coding Fundamentals',cat:'coding'},
+    {src:'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&q=80',full:'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1200&q=90',cap:'STEM Demo Day',cat:'events'},
+    {src:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80',full:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=90',cap:'IoT Workshop',cat:'iot'},
+    {src:'https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=600&q=80',full:'https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=1200&q=90',cap:'Team Build Challenge',cat:'robotics'},
+    {src:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&q=80',full:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=90',cap:'Partner School Session',cat:'events'},
+    {src:'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&q=80',full:'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1200&q=90',cap:'AI & Machine Learning',cat:'coding'},
+    {src:'https://images.unsplash.com/photo-1604999565976-8913ad2ddb37?w=600&q=80',full:'https://images.unsplash.com/photo-1604999565976-8913ad2ddb37?w=1200&q=90',cap:'Outdoor Drone Session',cat:'drones'},
+    {src:'https://images.unsplash.com/photo-1565043666747-69f6646db940?w=600&q=80',full:'https://images.unsplash.com/photo-1565043666747-69f6646db940?w=1200&q=90',cap:'3D Design & Print Lab',cat:'robotics'},
+    {src:'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80',full:'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1200&q=90',cap:'Student Presentation Day',cat:'events'},
+    {src:'https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=600&q=80',full:'https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=1200&q=90',cap:'Electronics & Circuits',cat:'iot'}
+  ]
+};
+
+
+// ── NEW RENDER FUNCTIONS ──
+
+function renderStats(){
+  var g=document.getElementById('statsGrid'); if(!g) return;
+  g.innerHTML=sectionData.stats.map(function(s){
+    return '<div class="stat reveal"><div class="stat-num">'+s.num+'</div><div class="stat-label">'+s.label+'</div></div>';
+  }).join('');
+  setTimeout(initReveal,80);
+}
+
+function renderHowImg(){
+  var img=document.getElementById('howSideImg');
+  var b1=document.getElementById('howBadge1');
+  var b2=document.getElementById('howBadge2');
+  var d=sectionData.howimg;
+  if(img) img.src=d.src;
+  if(b1) b1.textContent=d.badge1;
+  if(b2) b2.textContent=d.badge2;
+}
+
+function renderStory(){
+  var d=sectionData.story;
+  var imgEl=document.getElementById('storyImg');
+  var h=document.getElementById('storyHeading');
+  var p1=document.getElementById('storyP1');
+  var p2=document.getElementById('storyP2');
+  var p3=document.getElementById('storyP3');
+  if(imgEl) imgEl.src=d.img;
+  if(h) h.innerHTML=d.heading;
+  if(p1) p1.textContent=d.p1;
+  if(p2) p2.textContent=d.p2;
+  if(p3) p3.textContent=d.p3;
+}
+
+function renderGalleryHero(){
+  var d=sectionData.galleryhero;
+  var t=document.getElementById('galleryHeroTitle');
+  var p=document.getElementById('galleryHeroDesc');
+  var btn=document.getElementById('galleryHeroEditBtn');
+  if(t) t.innerHTML=d.title;
+  if(p) p.textContent=d.desc;
+  if(btn) btn.style.display=isAdmin?'flex':'none';
+}
+
+// ── COLOR MAP ──
+var CM={electric:['rgba(0,212,255,.15)','var(--electric)','rgba(0,212,255,.08)','rgba(0,212,255,.7)'],lime:['rgba(184,255,60,.15)','var(--lime)','rgba(184,255,60,.08)','rgba(184,255,60,.7)'],orange:['rgba(255,107,43,.15)','var(--orange)','rgba(255,107,43,.08)','rgba(255,107,43,.7)']};
+var IBG={electric:'rgba(0,212,255,.12)',lime:'rgba(184,255,60,.12)',orange:'rgba(255,107,43,.12)'};
+
+// ── RENDER FUNCTIONS ──
+function renderPrograms(){
+  var g=document.getElementById('programsGrid');if(!g)return;
+  g.innerHTML=sectionData.programs.map(function(p,i){
+    var c=CM[p.color]||CM.electric;
+    return '<div class="program-card reveal" style="position:relative">'
+      +'<button class="item-edit-btn" onclick="editItem(\'programs\','+i+',event)">✏️</button>'
+      +'<button class="item-del-btn" onclick="deleteItem(\'programs\','+i+',event)">✕</button>'
+      +'<img src="'+p.img+'" alt="'+p.title+'">'
+      +'<div class="program-body"><div class="program-icon" style="background:'+IBG[p.color]+'">'+p.icon+'</div>'
+      +'<h3>'+p.title+'</h3><p>'+p.desc+'</p>'
+      +'<div class="program-tags"><span class="tag" style="background:'+c[0]+';color:'+c[1]+'">'+p.tag1+'</span>'
+      +'<span class="tag" style="background:'+c[2]+';color:'+c[3]+'">'+p.tag2+'</span></div>'
+      +'</div></div>';
+  }).join('');
+  setTimeout(initReveal,80);
+}
+
+function renderHow(){
+  var g=document.getElementById('howStepsGrid');if(!g)return;
+  g.innerHTML=sectionData.how.map(function(s,i){
+    return '<div class="step reveal" style="position:relative">'
+      +'<button class="item-edit-btn" onclick="editItem(\'how\','+i+',event)">✏️</button>'
+      +'<button class="item-del-btn" onclick="deleteItem(\'how\','+i+',event)">✕</button>'
+      +'<div class="step-num">'+s.num+'</div><div><h4>'+s.title+'</h4><p>'+s.desc+'</p></div></div>';
+  }).join('');
+  setTimeout(initReveal,80);
+}
+
+function renderImpact(){
+  var g=document.getElementById('impactGrid');if(!g)return;
+  g.innerHTML=sectionData.impact.map(function(c,i){
+    return '<div class="impact-card '+c.cls+' reveal" style="position:relative">'
+      +'<button class="item-edit-btn" onclick="editItem(\'impact\','+i+',event)">✏️</button>'
+      +'<button class="item-del-btn" onclick="deleteItem(\'impact\','+i+',event)">✕</button>'
+      +'<div class="impact-emoji">'+c.emoji+'</div><h3>'+c.title+'</h3><p>'+c.desc+'</p></div>';
+  }).join('');
+  setTimeout(initReveal,80);
+}
+
+function renderPartners(){
+  var g=document.getElementById('partnersRow');if(!g)return;
+  g.innerHTML=sectionData.partners.map(function(s,i){
+    return '<div class="partner-chip" style="position:relative">'
+      +(isAdmin?'<button class="item-del-btn" style="top:-.4rem;right:-.4rem;width:22px;height:22px;font-size:.7rem" onclick="deleteItem(\'partners\','+i+',event)">✕</button>':'')
+      +'🏫 '+s+'</div>';
+  }).join('');
+}
+
+function renderValues(){
+  var g=document.getElementById('valuesGrid');if(!g)return;
+  g.innerHTML=sectionData.values.map(function(v,i){
+    return '<div class="value-card reveal" style="position:relative">'
+      +'<button class="item-edit-btn" onclick="editItem(\'values\','+i+',event)">✏️</button>'
+      +'<button class="item-del-btn" onclick="deleteItem(\'values\','+i+',event)">✕</button>'
+      +'<div class="value-icon">'+v.icon+'</div><h3>'+v.title+'</h3><p>'+v.desc+'</p></div>';
+  }).join('');
+  setTimeout(initReveal,80);
+}
+
+function renderMilestones(){
+  var g=document.getElementById('milestonesGrid');if(!g)return;
+  g.innerHTML=sectionData.milestones.map(function(m,i){
+    return '<div class="milestone reveal" style="position:relative">'
+      +'<button class="item-edit-btn" onclick="editItem(\'milestones\','+i+',event)">✏️</button>'
+      +'<button class="item-del-btn" onclick="deleteItem(\'milestones\','+i+',event)">✕</button>'
+      +'<div class="milestone-year">'+m.year+'</div><h4>'+m.title+'</h4><p>'+m.desc+'</p></div>';
+  }).join('');
+  setTimeout(initReveal,80);
+}
+
+var currentGalleryFilter='all';
+function renderGallery(filter){
+  currentGalleryFilter=filter||'all';
+  var g=document.getElementById('galleryGrid');if(!g)return;
+  var list=sectionData.gallery;
+  if(currentGalleryFilter!=='all') list=list.filter(function(x){return x.cat===currentGalleryFilter;});
+  if(!list.length){g.innerHTML='<div style="text-align:center;padding:4rem;color:rgba(248,249,255,.3);grid-column:1/-1">No photos in this category.</div>';return;}
+  g.innerHTML=list.map(function(item){
+    var realIdx=sectionData.gallery.indexOf(item);
+    return '<div class="gallery-item" data-cat="'+item.cat+'" style="position:relative">'
+      +(isAdmin?'<button class="item-del-btn" onclick="deleteGalleryItem('+realIdx+',event)">✕</button>':'')
+      +'<img src="'+item.src+'" alt="'+item.cap+'" onclick="openLightbox('+realIdx+')">'
+      +'<div class="gallery-overlay" onclick="openLightbox('+realIdx+')"><div class="gallery-caption">'+item.cap+'</div></div></div>';
+  }).join('');
+}
+
+// ── SECTION EDITOR MODAL ──
+var cmSection=null, cmItemIdx=-1, cmPendingImg=null;
+
+function openSectionEditor(section){
+  if(!isAdmin){openAdminLogin();return;}
+  cmSection=section;cmItemIdx=-1;cmPendingImg=null;
+  buildCMList();
+  document.getElementById('cmModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function editItem(section,idx,e){
+  if(e){e.stopPropagation();e.preventDefault();}
+  if(!isAdmin){openAdminLogin();return;}
+  cmSection=section;cmItemIdx=idx;cmPendingImg=null;
+  buildCMForm(section,idx);
+  document.getElementById('cmModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeCM(){
+  document.getElementById('cmModal').classList.remove('open');
+  document.body.style.overflow='';
+  cmSection=null;cmItemIdx=-1;cmPendingImg=null;
+}
+
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+function buildCMList(){
+  var titles={programs:'Edit STEM Programs',how:'Edit Partnership Steps',impact:'Edit Impact Cards',partners:'Edit Partner Schools',values:'Edit Core Values',milestones:'Edit Milestones',stats:'✏️ Edit Stats & Numbers',howimg:'✏️ Edit Partnership Image',story:'✏️ Edit Our Story',galleryhero:'✏️ Edit Gallery Heading'};
+  document.getElementById('cmTitle').textContent=titles[cmSection]||'Edit Section';
+  // Single-form sections go straight to edit, no list needed
+  if(cmSection==='stats'||cmSection==='howimg'||cmSection==='story'||cmSection==='galleryhero'){
+    buildCMForm(cmSection,0); return;
+  }
+  document.getElementById('cmSaveBtn').style.display='none';
+  var adds={programs:'+ Add Program',how:'+ Add Step',impact:'+ Add Card',partners:'+ Add School',values:'+ Add Value',milestones:'+ Add Milestone'};
+  var items=cmSection==='partners'?sectionData.partners.map(function(s,i){return{icon:'🏫',title:s};}):sectionData[cmSection]||[];
+  document.getElementById('cmBody').innerHTML='<div class="cm-items-list">'
+    +items.map(function(item,i){
+      var icon=item.icon||item.emoji||item.num||'•';
+      var title=item.title||item.name||(typeof item==='string'?item:'');
+      var desc=item.desc||item.year||'';
+      return '<div class="cm-item-row"><div class="cm-item-icon">'+icon+'</div>'
+        +'<div class="cm-item-body"><div class="cm-item-title">'+esc(title)+'</div>'+(desc?'<div class="cm-item-desc">'+esc(desc)+'</div>':'')+'</div>'
+        +'<div class="cm-item-btns"><button class="cm-ib cm-ib-e" onclick="editItem(\''+cmSection+'\','+i+',event)">✏️</button>'
+        +'<button class="cm-ib cm-ib-d" onclick="deleteItem(\''+cmSection+'\','+i+',event)">✕</button></div></div>';
+    }).join('')
+    +'</div><div class="cm-add-row" onclick="editItem(\''+cmSection+'\',-1,event)">'+(adds[cmSection]||'+ Add Item')+'</div>';
+}
+
+function buildCMForm(section,idx){
+  var isNew=idx===-1;
+  var addT={programs:'Add Program',how:'Add Step',impact:'Add Card',partners:'Add School',values:'Add Value',milestones:'Add Milestone'};
+  var editT={programs:'Edit Program',how:'Edit Step',impact:'Edit Impact Card',partners:'Edit School',values:'Edit Value',milestones:'Edit Milestone'};
+  document.getElementById('cmTitle').textContent=(isNew?addT[section]:editT[section])||'Edit Item';
+  document.getElementById('cmSaveBtn').style.display='';
+  var item=isNew?{}:(section==='partners'?{name:sectionData.partners[idx]}:(sectionData[section][idx]||{}));
+  var b=document.getElementById('cmBody');
+  var html='';
+
+  if(section==='partners'){
+    html='<div class="cm-field"><label>School Name</label><input type="text" id="cf_name" value="'+esc(item.name||'')+'"></div>';
+  } else if(section==='values'){
+    html='<div class="cm-2col"><div class="cm-field"><label>Emoji Icon</label><input type="text" id="cf_icon" value="'+esc(item.icon||'')+'" style="font-size:1.3rem"></div>'
+      +'<div class="cm-field"><label>Title</label><input type="text" id="cf_title" value="'+esc(item.title||'')+'"></div></div>'
+      +'<div class="cm-field"><label>Description</label><textarea id="cf_desc" rows="3">'+esc(item.desc||'')+'</textarea></div>';
+  } else if(section==='milestones'){
+    html='<div class="cm-2col"><div class="cm-field"><label>Year</label><input type="text" id="cf_year" value="'+esc(item.year||'')+'"></div>'
+      +'<div class="cm-field"><label>Title</label><input type="text" id="cf_title" value="'+esc(item.title||'')+'"></div></div>'
+      +'<div class="cm-field"><label>Description</label><textarea id="cf_desc" rows="3">'+esc(item.desc||'')+'</textarea></div>';
+  } else if(section==='how'){
+    html='<div class="cm-2col"><div class="cm-field"><label>Step Number</label><input type="text" id="cf_num" value="'+esc(item.num||'')+'"></div>'
+      +'<div class="cm-field"><label>Title</label><input type="text" id="cf_title" value="'+esc(item.title||'')+'"></div></div>'
+      +'<div class="cm-field"><label>Description</label><textarea id="cf_desc" rows="3">'+esc(item.desc||'')+'</textarea></div>';
+  } else if(section==='impact'){
+    html='<div class="cm-2col"><div class="cm-field"><label>Emoji</label><input type="text" id="cf_emoji" value="'+esc(item.emoji||'')+'" style="font-size:1.3rem"></div>'
+      +'<div class="cm-field"><label>Title</label><input type="text" id="cf_title" value="'+esc(item.title||'')+'"></div></div>'
+      +'<div class="cm-field"><label>Description</label><textarea id="cf_desc" rows="3">'+esc(item.desc||'')+'</textarea></div>';
+  } else if(section==='programs'){
+    var curImg=item.img||'';
+    html='<div class="cm-field"><label>Program Image</label>'
+      +'<div class="cm-photo-pick" id="cfImgPick" onclick="document.getElementById(\'cfImgFile\').click()" style="height:120px">'
+      +(curImg?'<img id="cfImgPrevImg" src="'+curImg+'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">':'')
+      +'<span class="cm-photo-icon" id="cfImgIcon"'+(curImg?' style="display:none"':'')+'>🖼️</span>'
+      +'<span class="cm-photo-lbl" id="cfImgLbl"'+(curImg?' style="display:none"':'')+'>Click to upload</span>'
+      +'<input type="file" id="cfImgFile" accept="image/*" style="display:none" onchange="handleCFImg(this)"></div></div>'
+      +'<div class="cm-2col"><div class="cm-field"><label>Emoji Icon</label><input type="text" id="cf_icon" value="'+esc(item.icon||'')+'" style="font-size:1.3rem"></div>'
+      +'<div class="cm-field"><label>Color Theme</label><select id="cf_color">'
+      +'<option value="electric"'+(item.color==='electric'?' selected':'')+'>Blue</option>'
+      +'<option value="lime"'+(item.color==='lime'?' selected':'')+'>Green</option>'
+      +'<option value="orange"'+(item.color==='orange'?' selected':'')+'>Orange</option>'
+      +'</select></div></div>'
+      +'<div class="cm-field"><label>Program Title</label><input type="text" id="cf_title" value="'+esc(item.title||'')+'"></div>'
+      +'<div class="cm-field"><label>Description</label><textarea id="cf_desc" rows="3">'+esc(item.desc||'')+'</textarea></div>'
+      +'<div class="cm-2col"><div class="cm-field"><label>Tag 1 (Ages)</label><input type="text" id="cf_tag1" value="'+esc(item.tag1||'')+'"></div>'
+      +'<div class="cm-field"><label>Tag 2 (Level)</label><input type="text" id="cf_tag2" value="'+esc(item.tag2||'')+'"></div></div>';
+  } else if(section==='stats'){
+    var d=sectionData.stats;
+    html='<p style="font-size:.82rem;color:rgba(248,249,255,.35);margin-bottom:1.2rem">Edit the four headline numbers shown on the home page.</p>'
+      +'<div class="cm-2col">'
+      +d.map(function(s,i){
+        return '<div class="cm-field"><label>Stat '+(i+1)+' Number</label><input type="text" id="cf_sn'+i+'" value="'+esc(s.num)+'"></div>'
+          +'<div class="cm-field"><label>Stat '+(i+1)+' Label</label><input type="text" id="cf_sl'+i+'" value="'+esc(s.label)+'"></div>';
+      }).join('')
+      +'</div>';
+  } else if(section==='howimg'){
+    var d=sectionData.howimg;
+    html='<div class="cm-field"><label>Section Image</label>'
+      +'<div class="cm-photo-pick" id="cfImgPick" onclick="document.getElementById(\'cfImgFile\').click()" style="height:160px">'
+      +'<img id="cfImgPrevImg" src="'+d.src+'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">'
+      +'<span class="cm-photo-icon" id="cfImgIcon" style="display:none">🖼️</span>'
+      +'<span class="cm-photo-lbl" id="cfImgLbl" style="display:none">Click to upload</span>'
+      +'<input type="file" id="cfImgFile" accept="image/*" style="display:none" onchange="handleCFImg(this)"></div>'
+      +'<p style="font-size:.78rem;color:rgba(248,249,255,.3);margin-top:.4rem">Or paste an image URL below:</p>'
+      +'<input type="text" id="cf_imgurl" placeholder="https://..." value="'+esc(d.src)+'" style="width:100%;background:var(--mid);border:1.5px solid rgba(255,255,255,.08);border-radius:10px;padding:.65rem 1rem;color:var(--white);font-family:\'DM Sans\',sans-serif;font-size:.85rem;outline:none;margin-top:.4rem"></div>'
+      +'<div class="cm-2col">'
+      +'<div class="cm-field"><label>Badge 1 Text</label><input type="text" id="cf_badge1" value="'+esc(d.badge1)+'"></div>'
+      +'<div class="cm-field"><label>Badge 2 Text</label><input type="text" id="cf_badge2" value="'+esc(d.badge2)+'"></div>'
+      +'</div>';
+  } else if(section==='story'){
+    var d=sectionData.story;
+    html='<div class="cm-field"><label>Story Image</label>'
+      +'<div class="cm-photo-pick" id="cfImgPick" onclick="document.getElementById(\'cfImgFile\').click()" style="height:150px">'
+      +'<img id="cfImgPrevImg" src="'+d.img+'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">'
+      +'<span class="cm-photo-icon" id="cfImgIcon" style="display:none">🖼️</span>'
+      +'<span class="cm-photo-lbl" id="cfImgLbl" style="display:none">Click to upload</span>'
+      +'<input type="file" id="cfImgFile" accept="image/*" style="display:none" onchange="handleCFImg(this)"></div>'
+      +'<p style="font-size:.78rem;color:rgba(248,249,255,.3);margin-top:.4rem">Or paste an image URL:</p>'
+      +'<input type="text" id="cf_imgurl" placeholder="https://..." value="'+esc(d.img)+'" style="width:100%;background:var(--mid);border:1.5px solid rgba(255,255,255,.08);border-radius:10px;padding:.65rem 1rem;color:var(--white);font-family:\'DM Sans\',sans-serif;font-size:.85rem;outline:none;margin-top:.4rem"></div>'
+      +'<div class="cm-field"><label>Heading</label><input type="text" id="cf_heading" value="'+esc(d.heading)+'"></div>'
+      +'<div class="cm-field"><label>Paragraph 1</label><textarea id="cf_p1" rows="3">'+esc(d.p1)+'</textarea></div>'
+      +'<div class="cm-field"><label>Paragraph 2</label><textarea id="cf_p2" rows="3">'+esc(d.p2)+'</textarea></div>'
+      +'<div class="cm-field"><label>Paragraph 3</label><textarea id="cf_p3" rows="2">'+esc(d.p3)+'</textarea></div>';
+  } else if(section==='galleryhero'){
+    var d=sectionData.galleryhero;
+    html='<div class="cm-field"><label>Heading</label><input type="text" id="cf_title" value="'+esc(d.title)+'"></div>'
+      +'<div class="cm-field"><label>Subtitle / Description</label><textarea id="cf_desc" rows="3">'+esc(d.desc)+'</textarea></div>';
+  }
+  b.innerHTML=html;
+}
+
+function handleCFImg(input){
+  var file=input.files[0];if(!file)return;
+  var r=new FileReader();
+  r.onload=function(e){
+    cmPendingImg=e.target.result;
+    var pick=document.getElementById('cfImgPick');if(!pick)return;
+    var existing=document.getElementById('cfImgPrevImg');
+    if(existing){existing.src=cmPendingImg;}
+    else{var img=document.createElement('img');img.id='cfImgPrevImg';img.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover';img.src=cmPendingImg;pick.insertBefore(img,pick.querySelector('input'));}
+    var icon=document.getElementById('cfImgIcon'),lbl=document.getElementById('cfImgLbl');
+    if(icon)icon.style.display='none';if(lbl)lbl.style.display='none';
+  };
+  r.readAsDataURL(file);
+}
+
+function gv(id){var el=document.getElementById(id);return el?el.value.trim():'';}
+
+function saveCM(){
+  var s=cmSection,idx=cmItemIdx,isNew=idx===-1;
+  var renders={programs:renderPrograms,how:renderHow,impact:renderImpact,partners:renderPartners,values:renderValues,milestones:renderMilestones,stats:renderStats,howimg:renderHowImg,story:renderStory,galleryhero:renderGalleryHero};
+
+  if(s==='stats'){
+    sectionData.stats.forEach(function(st,i){
+      var n=gv('cf_sn'+i),l=gv('cf_sl'+i);
+      if(n)st.num=n; if(l)st.label=l;
+    });
+  } else if(s==='howimg'){
+    var urlInput=gv('cf_imgurl');
+    sectionData.howimg={
+      src:cmPendingImg||(urlInput||sectionData.howimg.src),
+      badge1:gv('cf_badge1')||sectionData.howimg.badge1,
+      badge2:gv('cf_badge2')||sectionData.howimg.badge2
+    };
+  } else if(s==='story'){
+    var urlInput=gv('cf_imgurl');
+    sectionData.story={
+      img:cmPendingImg||(urlInput||sectionData.story.img),
+      heading:gv('cf_heading')||sectionData.story.heading,
+      p1:gv('cf_p1')||sectionData.story.p1,
+      p2:gv('cf_p2')||sectionData.story.p2,
+      p3:gv('cf_p3')||sectionData.story.p3
+    };
+  } else if(s==='galleryhero'){
+    var t=gv('cf_title'),d=gv('cf_desc');
+    if(!t){showToast('⚠️','Enter a heading');return;}
+    sectionData.galleryhero={title:t,desc:d};
+  } else if(s==='partners'){
+    var name=gv('cf_name');if(!name){showToast('⚠️','Enter a school name');return;}
+    if(isNew)sectionData.partners.push(name);else sectionData.partners[idx]=name;
+  } else if(s==='values'){
+    var t=gv('cf_title'),d=gv('cf_desc');if(!t){showToast('⚠️','Enter a title');return;}
+    var o={icon:gv('cf_icon'),title:t,desc:d};
+    if(isNew)sectionData.values.push(o);else sectionData.values[idx]=o;
+  } else if(s==='milestones'){
+    var y=gv('cf_year'),t=gv('cf_title'),d=gv('cf_desc');if(!y||!t){showToast('⚠️','Enter year and title');return;}
+    var o={year:y,title:t,desc:d};
+    if(isNew)sectionData.milestones.push(o);else sectionData.milestones[idx]=o;
+  } else if(s==='how'){
+    var t=gv('cf_title'),d=gv('cf_desc');if(!t){showToast('⚠️','Enter a title');return;}
+    var len=sectionData.how.length;
+    var o={num:gv('cf_num')||(isNew?String(len+1).padStart(2,'0'):sectionData.how[idx].num),title:t,desc:d};
+    if(isNew)sectionData.how.push(o);else sectionData.how[idx]=o;
+  } else if(s==='impact'){
+    var t=gv('cf_title'),d=gv('cf_desc');if(!t){showToast('⚠️','Enter a title');return;}
+    var classes=['c1','c2','c3'];
+    var o={emoji:gv('cf_emoji'),title:t,desc:d,cls:isNew?classes[sectionData.impact.length%3]:sectionData.impact[idx].cls};
+    if(isNew)sectionData.impact.push(o);else sectionData.impact[idx]=o;
+  } else if(s==='programs'){
+    var t=gv('cf_title'),d=gv('cf_desc');if(!t){showToast('⚠️','Enter a title');return;}
+    var ex=isNew?{}:sectionData.programs[idx];
+    var o={icon:gv('cf_icon'),title:t,desc:d,tag1:gv('cf_tag1'),tag2:gv('cf_tag2'),color:gv('cf_color')||'electric',img:cmPendingImg||(ex.img||'')};
+    if(isNew)sectionData.programs.push(o);else sectionData.programs[idx]=o;
+  }
+
+  if(renders[s])renders[s]();
+  showToast('✅','Changes saved!');
+  closeCM();
+}
+
+function deleteItem(section,idx,e){
+  if(e){e.stopPropagation();e.preventDefault();}
+  if(!isAdmin)return;
+  var label=section==='partners'?sectionData.partners[idx]:(sectionData[section][idx]||{}).title||'this item';
+  askDelete(label,function(){
+    if(section==='partners')sectionData.partners.splice(idx,1);
+    else sectionData[section].splice(idx,1);
+    var renders={programs:renderPrograms,how:renderHow,impact:renderImpact,partners:renderPartners,values:renderValues,milestones:renderMilestones};
+    if(renders[section])renders[section]();
+    if(document.getElementById('cmModal').classList.contains('open'))buildCMList();
+    showToast('🗑️','"'+label+'" removed');
+  });
+}
+
+// ── GALLERY ──
+var pendingGalleryPhoto=null;
+function openAddPhoto(){if(!isAdmin){openAdminLogin();return;}pendingGalleryPhoto=null;document.getElementById('photoPickPreview').style.display='none';document.getElementById('photoPickIcon').style.display='';document.getElementById('photoPickLbl').style.display='';document.getElementById('photoCaptionIn').value='';document.getElementById('photoCatIn').value='robotics';document.getElementById('photoFileIn').value='';document.getElementById('photoModal').classList.add('open');document.body.style.overflow='hidden';}
+function closePhotoModal(){document.getElementById('photoModal').classList.remove('open');document.body.style.overflow='';pendingGalleryPhoto=null;}
+function handleGalleryPhotoFile(input){var file=input.files[0];if(!file)return;var r=new FileReader();r.onload=function(e){pendingGalleryPhoto=e.target.result;var prev=document.getElementById('photoPickPreview');prev.src=pendingGalleryPhoto;prev.style.display='block';document.getElementById('photoPickIcon').style.display='none';document.getElementById('photoPickLbl').style.display='none';var cap=document.getElementById('photoCaptionIn');if(!cap.value)cap.value=file.name.replace(/\.[^.]+$/,'').replace(/[-_]/g,' ');};r.readAsDataURL(file);}
+function saveGalleryPhoto(){var cap=document.getElementById('photoCaptionIn').value.trim();var cat=document.getElementById('photoCatIn').value;if(!cap){showToast('⚠️','Enter a caption');return;}if(!pendingGalleryPhoto){showToast('⚠️','Select a photo');return;}sectionData.gallery.push({src:pendingGalleryPhoto,full:pendingGalleryPhoto,cap:cap,cat:cat});renderGallery('all');document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});var ab=document.querySelector('.filter-btn');if(ab)ab.classList.add('active');showToast('✅','"'+cap+'" added to gallery!');closePhotoModal();}
+function deleteGalleryItem(idx,e){if(e){e.stopPropagation();e.preventDefault();}if(!isAdmin)return;var cap=sectionData.gallery[idx].cap;askDelete(cap,function(){sectionData.gallery.splice(idx,1);renderGallery(currentGalleryFilter);showToast('🗑️','"'+cap+'" removed');});}
+
+// ── LIGHTBOX ──
+var lbIndex=0;
+function openLightbox(i){lbIndex=i;updateLightbox();var lb=document.getElementById('lightbox');if(lb)lb.classList.add('open');document.body.style.overflow='hidden';}
+function closeLightbox(){var lb=document.getElementById('lightbox');if(lb)lb.classList.remove('open');document.body.style.overflow='';}
+function changeLb(dir){lbIndex=(lbIndex+dir+sectionData.gallery.length)%sectionData.gallery.length;updateLightbox();}
+function updateLightbox(){var img=document.getElementById('lbImg'),cap=document.getElementById('lbCaption');if(img)img.src=sectionData.gallery[lbIndex].full||sectionData.gallery[lbIndex].src;if(cap)cap.textContent=sectionData.gallery[lbIndex].cap+' ('+(lbIndex+1)+'/'+sectionData.gallery.length+')';}
+function filterGallery(cat,btn){document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');renderGallery(cat);}
+
+// ── TEAM ──
+var teamMembers=[
+  {name:'David Kamara',role:'Founder & CEO',bio:'Educator-turned-entrepreneur with 12 years in STEM curriculum development. Passionate about democratizing tech education.',photo:'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80'},
+  {name:'Fatima Sesay',role:'Chief Operating Officer',bio:'Operations expert with a background in educational partnerships and scaling programs across multiple regions.',photo:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80'},
+  {name:'Ibrahim Koroma',role:'Head of Curriculum & Technology',bio:'Former robotics engineer with deep expertise in IoT, AI, and translating complex tech into classroom-ready experiences.',photo:'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80'},
+  {name:'Aminata Bangura',role:'Lead STEM Instructor',bio:'Certified drone pilot and maker educator. She brings contagious enthusiasm to every workshop she runs.',photo:'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80'}
+];
+var editingMemberIndex=-1,pendingTeamPhoto=null;
+function renderTeam(){var g=document.getElementById('teamGrid');if(!g)return;if(!teamMembers.length){g.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:4rem 2rem;border:2px dashed rgba(0,212,255,.15);border-radius:20px"><div style="font-size:3rem;margin-bottom:1rem">👥</div><p style="color:rgba(248,249,255,.35)">No team members yet. Click "+ Add Member" to start.</p></div>';return;}g.innerHTML=teamMembers.map(function(m,i){var ini=m.name.split(' ').map(function(w){return w[0];}).join('').substr(0,2).toUpperCase();var ph=m.photo?'<img src="'+m.photo+'" alt="'+m.name+'" onerror="this.style.display=\'none\'">':'';var fb='<div style="display:'+(m.photo?'none':'flex')+';width:100%;height:100%;align-items:center;justify-content:center;font-family:Syne,sans-serif;font-size:2.5rem;font-weight:800;background:linear-gradient(135deg,var(--electric),var(--lime));color:var(--navy)">'+ini+'</div>';return'<div class="team-card reveal"><div class="tc-admin-bar"><button class="tc-btn tc-edit-btn" onclick="openEditMember('+i+')">✏️</button><button class="tc-btn tc-del-btn" onclick="deleteMember('+i+')">✕</button></div><div class="tc-img-wrap">'+ph+fb+'</div><div class="team-card-body"><h3>'+m.name+'</h3><div class="team-role">'+m.role+'</div><p class="team-bio">'+m.bio+'</p></div></div>';}).join('');setTimeout(initReveal,80);}
+function openAddMember(){if(!isAdmin){openAdminLogin();return;}editingMemberIndex=-1;pendingTeamPhoto=null;document.getElementById('teamModalTitle').textContent='Add Member';document.getElementById('tmName').value='';document.getElementById('tmRole').value='';document.getElementById('tmBio').value='';resetPhotoPreview(null);document.getElementById('teamModal').classList.add('open');document.body.style.overflow='hidden';}
+function openEditMember(i){if(!isAdmin){openAdminLogin();return;}var m=teamMembers[i];if(!m)return;editingMemberIndex=i;pendingTeamPhoto=null;document.getElementById('teamModalTitle').textContent='Edit Member';document.getElementById('tmName').value=m.name;document.getElementById('tmRole').value=m.role;document.getElementById('tmBio').value=m.bio;resetPhotoPreview(m.photo);document.getElementById('tmPhotoInput').value='';document.getElementById('teamModal').classList.add('open');document.body.style.overflow='hidden';}
+function closeTeamModal(){document.getElementById('teamModal').classList.remove('open');document.body.style.overflow='';pendingTeamPhoto=null;editingMemberIndex=-1;}
+function resetPhotoPreview(src){var p=document.getElementById('tmPhotoPreview'),ph=document.getElementById('tmPhotoPlaceholder');if(src){p.src=src;p.style.display='block';ph.style.display='none';}else{p.src='';p.style.display='none';ph.style.display='flex';}}
+function handleTeamPhoto(input){var f=input.files[0];if(!f)return;var r=new FileReader();r.onload=function(e){pendingTeamPhoto=e.target.result;resetPhotoPreview(pendingTeamPhoto);};r.readAsDataURL(f);}
+function saveTeamMember(){var n=document.getElementById('tmName').value.trim(),ro=document.getElementById('tmRole').value.trim(),b=document.getElementById('tmBio').value.trim();if(!n){showToast('⚠️','Enter a name');return;}if(!ro){showToast('⚠️','Enter a title');return;}if(!b){showToast('⚠️','Enter a bio');return;}if(editingMemberIndex===-1){teamMembers.push({name:n,role:ro,bio:b,photo:pendingTeamPhoto||''});showToast('✅','"'+n+'" added!');}else{var ex=teamMembers[editingMemberIndex];teamMembers[editingMemberIndex]={name:n,role:ro,bio:b,photo:pendingTeamPhoto||ex.photo};showToast('✅','"'+n+'" updated!');}closeTeamModal();renderTeam();}
+function deleteMember(i){if(!isAdmin)return;var nm=teamMembers[i].name;askDelete(nm,function(){teamMembers.splice(i,1);renderTeam();showToast('🗑️','"'+nm+'" removed');});}
+
+// ── RESOURCES ──
+var videos=[],books=[],uploadedResources=[],currentPreviewResource=null;
+function renderVideos(list){var g=document.getElementById('videoGrid');if(!g)return;if(!list.length){g.innerHTML='<div style="text-align:center;padding:4rem 2rem;border:2px dashed rgba(0,212,255,.15);border-radius:20px"><div style="font-size:3rem;margin-bottom:1rem">🎬</div><div style="font-family:Syne,sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:.5rem">No videos yet</div><p style="font-size:.88rem;color:rgba(248,249,255,.35)">Log in as Admin and use the Upload tab.</p></div>';return;}g.innerHTML=list.map(function(v,i){return'<div class="resource-card" style="position:relative"><button class="item-del-btn" onclick="deleteVideo('+i+')">✕</button><div class="res-thumb"><img src="'+v.thumb+'" alt="'+v.title+'"><span class="res-thumb-icon" style="font-size:2rem;color:#fff">▶</span><span class="res-badge video">VIDEO</span></div><div class="res-info"><div class="res-title">'+v.title+'</div><div class="res-meta">'+v.meta+'</div><div class="res-desc">'+v.desc+'</div></div><div class="res-actions"><button class="res-action-btn primary" onclick="openPreview('+i+',\'video\')">▶ Play</button><button class="res-action-btn secondary" onclick="downloadResource('+i+',\'video\')">📥 Save</button></div></div>';}).join('');}
+function renderBooks(list){var g=document.getElementById('bookGrid');if(!g)return;if(!list.length){g.innerHTML='<div style="text-align:center;padding:4rem 2rem;border:2px dashed rgba(0,212,255,.15);border-radius:20px"><div style="font-size:3rem;margin-bottom:1rem">📚</div><div style="font-family:Syne,sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:.5rem">No books yet</div><p style="font-size:.88rem;color:rgba(248,249,255,.35)">Log in as Admin and use the Upload tab.</p></div>';return;}g.innerHTML=list.map(function(b,i){return'<div class="resource-card" style="position:relative"><button class="item-del-btn" onclick="deleteBook('+i+')">✕</button><div class="res-thumb" style="font-size:4rem;background:linear-gradient(135deg,var(--mid),var(--card))"><span class="res-thumb-icon">'+(b.icon||'📄')+'</span><span class="res-badge '+(b.type||'pdf')+'">'+(b.type||'PDF').toUpperCase()+'</span></div><div class="res-info"><div class="res-title">'+b.title+'</div><div class="res-meta">'+b.meta+'</div><div class="res-desc">'+b.desc+'</div></div><div class="res-actions"><button class="res-action-btn primary" onclick="downloadResource('+i+',\'book\')">📥 Download</button><button class="res-action-btn secondary" onclick="openPreview('+i+',\'book\')">👁 Preview</button></div></div>';}).join('');}
+function deleteVideo(i){if(!isAdmin)return;var t=videos[i].title;askDelete(t,function(){videos.splice(i,1);renderVideos(videos);showToast('🗑️','"'+t+'" removed');});}
+function deleteBook(i){if(!isAdmin)return;var t=books[i].title;askDelete(t,function(){books.splice(i,1);renderBooks(books);showToast('🗑️','"'+t+'" removed');});}
+function switchTab(id,btn){if(id==='upload'&&!isAdmin){openAdminLogin();return;}document.querySelectorAll('.res-tab').forEach(function(t){t.classList.remove('active');});document.querySelectorAll('.res-panel').forEach(function(p){p.classList.remove('active');});btn.classList.add('active');var panel=document.getElementById('tab-'+id);if(panel)panel.classList.add('active');}
+function searchResources(type,q){q=q.toLowerCase();if(type==='video')renderVideos(videos.filter(function(v){return v.title.toLowerCase().includes(q)||v.desc.toLowerCase().includes(q);}));else renderBooks(books.filter(function(b){return b.title.toLowerCase().includes(q)||b.desc.toLowerCase().includes(q);}));}
+function openPreview(index,listType){var res=listType==='video'?videos[index]:books[index];if(!res)return;currentPreviewResource=res;var modal=document.getElementById('previewModal'),frame=document.getElementById('previewFrame');if(!modal||!frame)return;document.getElementById('pmTitle').textContent=res.title;document.getElementById('pmIcon').textContent=res.icon||(res.type==='video'?'🎬':'📄');frame.innerHTML='';if(res.blobUrl){var ext=(res.fileName||'').split('.').pop().toLowerCase();if(['mp4','mov','avi','webm'].includes(ext))frame.innerHTML='<video controls autoplay src="'+res.blobUrl+'" style="width:100%;min-height:55vh;background:#000;display:block"></video>';else if(ext==='pdf')frame.innerHTML='<iframe src="'+res.blobUrl+'" style="width:100%;height:75vh;border:none;border-radius:8px"></iframe>';else frame.innerHTML='<div class="preview-unsupported"><span>📄</span><p>Preview not available. Use Download.</p></div>';}else frame.innerHTML='<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:1.5rem;padding:2rem;text-align:center"><div style="font-size:5rem">'+(res.icon||'📄')+'</div><div style="font-family:Syne,sans-serif;font-size:1.2rem;font-weight:700">'+res.title+'</div><div style="font-size:.85rem;color:rgba(248,249,255,.4)">'+res.meta+'</div><div style="font-size:.9rem;color:rgba(248,249,255,.55);max-width:500px;line-height:1.7">'+res.desc+'</div><div style="margin-top:1rem;font-size:.82rem;color:rgba(0,212,255,.6);background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.15);padding:.6rem 1.2rem;border-radius:8px">Upload the actual file to enable preview & download.</div></div>';modal.classList.add('open');document.body.style.overflow='hidden';}
+function closePreview(){var m=document.getElementById('previewModal');if(m)m.classList.remove('open');var v=document.querySelector('#previewFrame video');if(v)v.pause();document.body.style.overflow='';currentPreviewResource=null;}
+function triggerDownloadFromPreview(){if(currentPreviewResource&&currentPreviewResource.blobUrl){var a=document.createElement('a');a.href=currentPreviewResource.blobUrl;a.download=currentPreviewResource.fileName||'resource';document.body.appendChild(a);a.click();document.body.removeChild(a);showToast('📥','"'+currentPreviewResource.title+'" download started!');}}
+function downloadResource(index,listType){var res=listType==='video'?videos[index]:books[index];if(!res)return;if(res.blobUrl&&res.fileName){var a=document.createElement('a');a.href=res.blobUrl;a.download=res.fileName;document.body.appendChild(a);a.click();document.body.removeChild(a);showToast('📥','"'+res.title+'" download started!');}else showToast('ℹ️','Upload the actual file to enable downloading.');}
+var pendingFiles=[];
+function handleDragOver(e){e.preventDefault();var z=document.getElementById('uploadZone');if(z)z.classList.add('dragover');}
+function handleDragLeave(){var z=document.getElementById('uploadZone');if(z)z.classList.remove('dragover');}
+function handleDrop(e){e.preventDefault();var z=document.getElementById('uploadZone');if(z)z.classList.remove('dragover');handleFiles(e.dataTransfer.files);}
+function handleFiles(files){if(!isAdmin){openAdminLogin();return;}pendingFiles=Array.from(files);var area=document.getElementById('uploadProgressArea');if(!area)return;area.innerHTML='';pendingFiles.forEach(function(file){var uid='up_'+Math.random().toString(36).substr(2,6);var ext=file.name.split('.').pop().toLowerCase();var icon=['mp4','mov','avi','webm'].includes(ext)?'🎬':['pdf','epub'].includes(ext)?'📄':'📁';area.innerHTML+='<div class="upload-progress" id="'+uid+'"><span class="up-icon">'+icon+'</span><div class="up-info"><div class="up-name">'+file.name+'</div><div class="up-bar-wrap"><div class="up-bar" id="bar_'+uid+'"></div></div><div class="up-percent" id="pct_'+uid+'">Ready</div></div><button class="up-cancel" onclick="document.getElementById(\''+uid+'\').remove()">✕</button></div>';});var te=document.getElementById('resTitle');if(pendingFiles.length&&te&&!te.value)te.value=pendingFiles[0].name.replace(/\.[^.]+$/,'').replace(/[-_]/g,' ');}
+function submitUpload(){if(!isAdmin){openAdminLogin();return;}var te=document.getElementById('resTitle'),ce=document.getElementById('resCategory'),de=document.getElementById('resDesc');var title=te?te.value.trim():'',cat=ce?ce.value:'general',desc=de?de.value.trim():'Uploaded resource.';if(!title){showToast('⚠️','Add a title');return;}if(!pendingFiles.length){showToast('⚠️','Select a file');return;}var pels=document.querySelectorAll('.upload-progress');pendingFiles.forEach(function(file,fi){var el=pels[fi];if(!el)return;var uid=el.id,progress=0;var ext=file.name.split('.').pop().toLowerCase(),isVideo=['mp4','mov','avi','webm'].includes(ext),isPDF=['pdf','epub','doc','docx'].includes(ext);var sizeMB=(file.size/1024/1024).toFixed(1),typeLabel=isVideo?'video':isPDF?'pdf':'book',icon=isVideo?'🎬':isPDF?'📄':'📁';var catMap={robotics:'Robotics',iot:'IoT',drones:'Drones',coding:'Coding & AI','3d':'3D Design',general:'General STEM'};var iv=setInterval(function(){progress+=Math.random()*15+4;if(progress>=100){progress=100;clearInterval(iv);var pe=document.getElementById('pct_'+uid),be=document.getElementById('bar_'+uid);if(pe){pe.textContent='Done!';pe.style.color='var(--lime)';}if(be){be.style.background='var(--lime)';be.style.width='100%';}var blobUrl=URL.createObjectURL(file);var nr={title:title,meta:ext.toUpperCase()+' • '+sizeMB+' MB • '+(catMap[cat]||cat),desc:desc,type:typeLabel,icon:icon,fileType:isVideo?'video':'document',blobUrl:blobUrl,fileName:file.name};uploadedResources.push(nr);if(isVideo){videos.unshift(nr);renderVideos(videos);}else{books.unshift(nr);renderBooks(books);}if(fi===pendingFiles.length-1){showToast('✅','"'+title+'" added!');if(te)te.value='';if(de)de.value='';if(ce)ce.value='robotics';pendingFiles=[];setTimeout(function(){var s=isVideo?'button[onclick*="videos"]':'button[onclick*="books"]';var tb=document.querySelector(s);if(tb)tb.click();},1200);}}else{var pe=document.getElementById('pct_'+uid),be=document.getElementById('bar_'+uid);if(pe)pe.textContent=Math.round(progress)+'%...';if(be)be.style.width=Math.min(progress,100)+'%';}},80);});}
+
+// ── ADMIN AUTH ──
+function openAdminLogin(){document.getElementById('adminModal').classList.add('open');document.getElementById('adminUser').value='';document.getElementById('adminPass').value='';document.getElementById('adminErr').classList.remove('show');document.body.style.overflow='hidden';setTimeout(function(){document.getElementById('adminUser').focus();},100);}
+function closeAdminLogin(){document.getElementById('adminModal').classList.remove('open');document.body.style.overflow='';}
+function doAdminLogin(){var u=document.getElementById('adminUser').value.trim(),p=document.getElementById('adminPass').value;if(u===ADMIN_USER&&p===ADMIN_PASS){isAdmin=true;document.body.classList.add('is-admin');document.getElementById('adminNavBadge').classList.add('visible');document.getElementById('adminLoginLi').style.display='none';document.getElementById('adminModeBar').classList.add('show');closeAdminLogin();renderAll();showToast('🛡️','Welcome back, Admin!');}else{document.getElementById('adminErr').classList.add('show');document.getElementById('adminPass').value='';document.getElementById('adminPass').focus();}}
+function logoutAdmin(){isAdmin=false;document.body.classList.remove('is-admin');document.getElementById('adminNavBadge').classList.remove('visible');document.getElementById('adminLoginLi').style.display='';document.getElementById('adminModeBar').classList.remove('show');var up=document.getElementById('tab-upload');if(up&&up.classList.contains('active')){var ft=document.querySelector('.res-tab:not(.upload-tab-btn)');if(ft)ft.click();}renderAll();showToast('👋','Logged out');}
+
+// ── DELETE CONFIRM ──
+function askDelete(label,onConfirm){document.getElementById('delModalDesc').textContent='"'+label+'" will be permanently removed.';document.getElementById('delConfirmBtn').onclick=function(){onConfirm();closeDelModal();};document.getElementById('delModal').classList.add('open');document.body.style.overflow='hidden';}
+function closeDelModal(){document.getElementById('delModal').classList.remove('open');document.body.style.overflow='';}
+
+// ── NAVIGATION ──
+function showPage(id){document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});var pg=document.getElementById('page-'+id);if(pg)pg.classList.add('active');document.querySelectorAll('[data-page]').forEach(function(a){a.classList.remove('active');});var lk=document.querySelector('[data-page="'+id+'"]');if(lk)lk.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});setTimeout(initReveal,120);var nav=document.getElementById('navLinks');if(nav)nav.classList.remove('open');}
+function toggleMenu(){var nav=document.getElementById('navLinks');if(nav)nav.classList.toggle('open');}
+function getCurrentPage(){var a=document.querySelector('.page.active');return a?a.id.replace('page-',''):'home';}
+function initReveal(){var obs=new IntersectionObserver(function(entries){entries.forEach(function(e,i){if(e.isIntersecting)setTimeout(function(){e.target.classList.add('visible');},i*60);});},{threshold:0.08});document.querySelectorAll('#page-'+getCurrentPage()+' .reveal').forEach(function(el){el.classList.remove('visible');obs.observe(el);});}
+
+// ── TOAST ──
+function showToast(icon,msg){var t=document.getElementById('toast'),ti=document.getElementById('toastIcon'),tm=document.getElementById('toastMsg');if(!t)return;if(ti)ti.textContent=icon;if(tm)tm.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},3200);}
+
+// ── KEYBOARD ──
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closePreview();closeLightbox();closeDelModal();closeAdminLogin();closeCM();closeTeamModal();closePhotoModal();}if(e.key==='ArrowLeft')changeLb(-1);if(e.key==='ArrowRight')changeLb(1);if(e.key==='Enter'&&document.getElementById('adminModal').classList.contains('open'))doAdminLogin();});
+
+// ── RENDER ALL & INIT ──
+function renderAll(){renderStats();renderHowImg();renderStory();renderGalleryHero();renderPrograms();renderHow();renderImpact();renderPartners();renderValues();renderMilestones();renderGallery('all');renderTeam();renderVideos(videos);renderBooks(books);}
+document.addEventListener('DOMContentLoaded',function(){renderAll();initReveal();});
+window.addEventListener('scroll',initReveal);
+</script>
+</body>
+</html>
