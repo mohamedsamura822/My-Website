@@ -545,6 +545,9 @@ body.is-admin .item-edit-btn{display:flex}
 .cm-btn-save{background:var(--electric);color:var(--navy);border:none;padding:.62rem 1.6rem;border-radius:10px;font-family:'Syne',sans-serif;font-weight:800;font-size:.88rem;cursor:pointer;transition:transform .2s,box-shadow .2s}
 .cm-btn-save:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,212,255,.3)}
 </style>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 </head>
 <body>
 
@@ -1525,6 +1528,7 @@ function saveCM(){
   }
 
   if(renders[s])renders[s]();
+  persist();
   showToast('✅','Changes saved!');
   closeCM();
 }
@@ -1538,6 +1542,7 @@ function deleteItem(section,idx,e){
     else sectionData[section].splice(idx,1);
     var renders={programs:renderPrograms,how:renderHow,impact:renderImpact,partners:renderPartners,values:renderValues,milestones:renderMilestones};
     if(renders[section])renders[section]();
+    persist();
     if(document.getElementById('cmModal').classList.contains('open'))buildCMList();
     showToast('🗑️','"'+label+'" removed');
   });
@@ -1548,8 +1553,8 @@ var pendingGalleryPhoto=null;
 function openAddPhoto(){if(!isAdmin){openAdminLogin();return;}pendingGalleryPhoto=null;document.getElementById('photoPickPreview').style.display='none';document.getElementById('photoPickIcon').style.display='';document.getElementById('photoPickLbl').style.display='';document.getElementById('photoCaptionIn').value='';document.getElementById('photoCatIn').value='robotics';document.getElementById('photoFileIn').value='';document.getElementById('photoModal').classList.add('open');document.body.style.overflow='hidden';}
 function closePhotoModal(){document.getElementById('photoModal').classList.remove('open');document.body.style.overflow='';pendingGalleryPhoto=null;}
 function handleGalleryPhotoFile(input){var file=input.files[0];if(!file)return;var r=new FileReader();r.onload=function(e){pendingGalleryPhoto=e.target.result;var prev=document.getElementById('photoPickPreview');prev.src=pendingGalleryPhoto;prev.style.display='block';document.getElementById('photoPickIcon').style.display='none';document.getElementById('photoPickLbl').style.display='none';var cap=document.getElementById('photoCaptionIn');if(!cap.value)cap.value=file.name.replace(/\.[^.]+$/,'').replace(/[-_]/g,' ');};r.readAsDataURL(file);}
-function saveGalleryPhoto(){var cap=document.getElementById('photoCaptionIn').value.trim();var cat=document.getElementById('photoCatIn').value;if(!cap){showToast('⚠️','Enter a caption');return;}if(!pendingGalleryPhoto){showToast('⚠️','Select a photo');return;}sectionData.gallery.push({src:pendingGalleryPhoto,full:pendingGalleryPhoto,cap:cap,cat:cat});renderGallery('all');document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});var ab=document.querySelector('.filter-btn');if(ab)ab.classList.add('active');showToast('✅','"'+cap+'" added to gallery!');closePhotoModal();}
-function deleteGalleryItem(idx,e){if(e){e.stopPropagation();e.preventDefault();}if(!isAdmin)return;var cap=sectionData.gallery[idx].cap;askDelete(cap,function(){sectionData.gallery.splice(idx,1);renderGallery(currentGalleryFilter);showToast('🗑️','"'+cap+'" removed');});}
+function saveGalleryPhoto(){var cap=document.getElementById('photoCaptionIn').value.trim();var cat=document.getElementById('photoCatIn').value;if(!cap){showToast('⚠️','Enter a caption');return;}if(!pendingGalleryPhoto){showToast('⚠️','Select a photo');return;}sectionData.gallery.push({src:pendingGalleryPhoto,full:pendingGalleryPhoto,cap:cap,cat:cat});renderGallery('all');document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});var ab=document.querySelector('.filter-btn');if(ab)ab.classList.add('active');persist();showToast('✅','"'+cap+'" added to gallery!');closePhotoModal();}
+function deleteGalleryItem(idx,e){if(e){e.stopPropagation();e.preventDefault();}if(!isAdmin)return;var cap=sectionData.gallery[idx].cap;askDelete(cap,function(){sectionData.gallery.splice(idx,1);renderGallery(currentGalleryFilter);persist();showToast('🗑️','"'+cap+'" removed');});}
 
 // ── LIGHTBOX ──
 var lbIndex=0;
@@ -1573,15 +1578,15 @@ function openEditMember(i){if(!isAdmin){openAdminLogin();return;}var m=teamMembe
 function closeTeamModal(){document.getElementById('teamModal').classList.remove('open');document.body.style.overflow='';pendingTeamPhoto=null;editingMemberIndex=-1;}
 function resetPhotoPreview(src){var p=document.getElementById('tmPhotoPreview'),ph=document.getElementById('tmPhotoPlaceholder');if(src){p.src=src;p.style.display='block';ph.style.display='none';}else{p.src='';p.style.display='none';ph.style.display='flex';}}
 function handleTeamPhoto(input){var f=input.files[0];if(!f)return;var r=new FileReader();r.onload=function(e){pendingTeamPhoto=e.target.result;resetPhotoPreview(pendingTeamPhoto);};r.readAsDataURL(f);}
-function saveTeamMember(){var n=document.getElementById('tmName').value.trim(),ro=document.getElementById('tmRole').value.trim(),b=document.getElementById('tmBio').value.trim();if(!n){showToast('⚠️','Enter a name');return;}if(!ro){showToast('⚠️','Enter a title');return;}if(!b){showToast('⚠️','Enter a bio');return;}if(editingMemberIndex===-1){teamMembers.push({name:n,role:ro,bio:b,photo:pendingTeamPhoto||''});showToast('✅','"'+n+'" added!');}else{var ex=teamMembers[editingMemberIndex];teamMembers[editingMemberIndex]={name:n,role:ro,bio:b,photo:pendingTeamPhoto||ex.photo};showToast('✅','"'+n+'" updated!');}closeTeamModal();renderTeam();}
-function deleteMember(i){if(!isAdmin)return;var nm=teamMembers[i].name;askDelete(nm,function(){teamMembers.splice(i,1);renderTeam();showToast('🗑️','"'+nm+'" removed');});}
+function saveTeamMember(){var n=document.getElementById('tmName').value.trim(),ro=document.getElementById('tmRole').value.trim(),b=document.getElementById('tmBio').value.trim();if(!n){showToast('⚠️','Enter a name');return;}if(!ro){showToast('⚠️','Enter a title');return;}if(!b){showToast('⚠️','Enter a bio');return;}if(editingMemberIndex===-1){teamMembers.push({name:n,role:ro,bio:b,photo:pendingTeamPhoto||''});showToast('✅','"'+n+'" added!');}else{var ex=teamMembers[editingMemberIndex];teamMembers[editingMemberIndex]={name:n,role:ro,bio:b,photo:pendingTeamPhoto||ex.photo};showToast('✅','"'+n+'" updated!');}closeTeamModal();renderTeam();persist();}
+function deleteMember(i){if(!isAdmin)return;var nm=teamMembers[i].name;askDelete(nm,function(){teamMembers.splice(i,1);renderTeam();persist();showToast('🗑️','"'+nm+'" removed');});}
 
 // ── RESOURCES ──
 var videos=[],books=[],uploadedResources=[],currentPreviewResource=null;
 function renderVideos(list){var g=document.getElementById('videoGrid');if(!g)return;if(!list.length){g.innerHTML='<div style="text-align:center;padding:4rem 2rem;border:2px dashed rgba(0,212,255,.15);border-radius:20px"><div style="font-size:3rem;margin-bottom:1rem">🎬</div><div style="font-family:Syne,sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:.5rem">No videos yet</div><p style="font-size:.88rem;color:rgba(248,249,255,.35)">Log in as Admin and use the Upload tab.</p></div>';return;}g.innerHTML=list.map(function(v,i){return'<div class="resource-card" style="position:relative"><button class="item-del-btn" onclick="deleteVideo('+i+')">✕</button><div class="res-thumb"><img src="'+v.thumb+'" alt="'+v.title+'"><span class="res-thumb-icon" style="font-size:2rem;color:#fff">▶</span><span class="res-badge video">VIDEO</span></div><div class="res-info"><div class="res-title">'+v.title+'</div><div class="res-meta">'+v.meta+'</div><div class="res-desc">'+v.desc+'</div></div><div class="res-actions"><button class="res-action-btn primary" onclick="openPreview('+i+',\'video\')">▶ Play</button><button class="res-action-btn secondary" onclick="downloadResource('+i+',\'video\')">📥 Save</button></div></div>';}).join('');}
 function renderBooks(list){var g=document.getElementById('bookGrid');if(!g)return;if(!list.length){g.innerHTML='<div style="text-align:center;padding:4rem 2rem;border:2px dashed rgba(0,212,255,.15);border-radius:20px"><div style="font-size:3rem;margin-bottom:1rem">📚</div><div style="font-family:Syne,sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:.5rem">No books yet</div><p style="font-size:.88rem;color:rgba(248,249,255,.35)">Log in as Admin and use the Upload tab.</p></div>';return;}g.innerHTML=list.map(function(b,i){return'<div class="resource-card" style="position:relative"><button class="item-del-btn" onclick="deleteBook('+i+')">✕</button><div class="res-thumb" style="font-size:4rem;background:linear-gradient(135deg,var(--mid),var(--card))"><span class="res-thumb-icon">'+(b.icon||'📄')+'</span><span class="res-badge '+(b.type||'pdf')+'">'+(b.type||'PDF').toUpperCase()+'</span></div><div class="res-info"><div class="res-title">'+b.title+'</div><div class="res-meta">'+b.meta+'</div><div class="res-desc">'+b.desc+'</div></div><div class="res-actions"><button class="res-action-btn primary" onclick="downloadResource('+i+',\'book\')">📥 Download</button><button class="res-action-btn secondary" onclick="openPreview('+i+',\'book\')">👁 Preview</button></div></div>';}).join('');}
-function deleteVideo(i){if(!isAdmin)return;var t=videos[i].title;askDelete(t,function(){videos.splice(i,1);renderVideos(videos);showToast('🗑️','"'+t+'" removed');});}
-function deleteBook(i){if(!isAdmin)return;var t=books[i].title;askDelete(t,function(){books.splice(i,1);renderBooks(books);showToast('🗑️','"'+t+'" removed');});}
+function deleteVideo(i){if(!isAdmin)return;var t=videos[i].title;askDelete(t,function(){videos.splice(i,1);renderVideos(videos);persist();showToast('🗑️','"'+t+'" removed');});}
+function deleteBook(i){if(!isAdmin)return;var t=books[i].title;askDelete(t,function(){books.splice(i,1);renderBooks(books);persist();showToast('🗑️','"'+t+'" removed');});}
 function switchTab(id,btn){if(id==='upload'&&!isAdmin){openAdminLogin();return;}document.querySelectorAll('.res-tab').forEach(function(t){t.classList.remove('active');});document.querySelectorAll('.res-panel').forEach(function(p){p.classList.remove('active');});btn.classList.add('active');var panel=document.getElementById('tab-'+id);if(panel)panel.classList.add('active');}
 function searchResources(type,q){q=q.toLowerCase();if(type==='video')renderVideos(videos.filter(function(v){return v.title.toLowerCase().includes(q)||v.desc.toLowerCase().includes(q);}));else renderBooks(books.filter(function(b){return b.title.toLowerCase().includes(q)||b.desc.toLowerCase().includes(q);}));}
 function openPreview(index,listType){var res=listType==='video'?videos[index]:books[index];if(!res)return;currentPreviewResource=res;var modal=document.getElementById('previewModal'),frame=document.getElementById('previewFrame');if(!modal||!frame)return;document.getElementById('pmTitle').textContent=res.title;document.getElementById('pmIcon').textContent=res.icon||(res.type==='video'?'🎬':'📄');frame.innerHTML='';if(res.blobUrl){var ext=(res.fileName||'').split('.').pop().toLowerCase();if(['mp4','mov','avi','webm'].includes(ext))frame.innerHTML='<video controls autoplay src="'+res.blobUrl+'" style="width:100%;min-height:55vh;background:#000;display:block"></video>';else if(ext==='pdf')frame.innerHTML='<iframe src="'+res.blobUrl+'" style="width:100%;height:75vh;border:none;border-radius:8px"></iframe>';else frame.innerHTML='<div class="preview-unsupported"><span>📄</span><p>Preview not available. Use Download.</p></div>';}else frame.innerHTML='<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:1.5rem;padding:2rem;text-align:center"><div style="font-size:5rem">'+(res.icon||'📄')+'</div><div style="font-family:Syne,sans-serif;font-size:1.2rem;font-weight:700">'+res.title+'</div><div style="font-size:.85rem;color:rgba(248,249,255,.4)">'+res.meta+'</div><div style="font-size:.9rem;color:rgba(248,249,255,.55);max-width:500px;line-height:1.7">'+res.desc+'</div><div style="margin-top:1rem;font-size:.82rem;color:rgba(0,212,255,.6);background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.15);padding:.6rem 1.2rem;border-radius:8px">Upload the actual file to enable preview & download.</div></div>';modal.classList.add('open');document.body.style.overflow='hidden';}
@@ -1593,12 +1598,12 @@ function handleDragOver(e){e.preventDefault();var z=document.getElementById('upl
 function handleDragLeave(){var z=document.getElementById('uploadZone');if(z)z.classList.remove('dragover');}
 function handleDrop(e){e.preventDefault();var z=document.getElementById('uploadZone');if(z)z.classList.remove('dragover');handleFiles(e.dataTransfer.files);}
 function handleFiles(files){if(!isAdmin){openAdminLogin();return;}pendingFiles=Array.from(files);var area=document.getElementById('uploadProgressArea');if(!area)return;area.innerHTML='';pendingFiles.forEach(function(file){var uid='up_'+Math.random().toString(36).substr(2,6);var ext=file.name.split('.').pop().toLowerCase();var icon=['mp4','mov','avi','webm'].includes(ext)?'🎬':['pdf','epub'].includes(ext)?'📄':'📁';area.innerHTML+='<div class="upload-progress" id="'+uid+'"><span class="up-icon">'+icon+'</span><div class="up-info"><div class="up-name">'+file.name+'</div><div class="up-bar-wrap"><div class="up-bar" id="bar_'+uid+'"></div></div><div class="up-percent" id="pct_'+uid+'">Ready</div></div><button class="up-cancel" onclick="document.getElementById(\''+uid+'\').remove()">✕</button></div>';});var te=document.getElementById('resTitle');if(pendingFiles.length&&te&&!te.value)te.value=pendingFiles[0].name.replace(/\.[^.]+$/,'').replace(/[-_]/g,' ');}
-function submitUpload(){if(!isAdmin){openAdminLogin();return;}var te=document.getElementById('resTitle'),ce=document.getElementById('resCategory'),de=document.getElementById('resDesc');var title=te?te.value.trim():'',cat=ce?ce.value:'general',desc=de?de.value.trim():'Uploaded resource.';if(!title){showToast('⚠️','Add a title');return;}if(!pendingFiles.length){showToast('⚠️','Select a file');return;}var pels=document.querySelectorAll('.upload-progress');pendingFiles.forEach(function(file,fi){var el=pels[fi];if(!el)return;var uid=el.id,progress=0;var ext=file.name.split('.').pop().toLowerCase(),isVideo=['mp4','mov','avi','webm'].includes(ext),isPDF=['pdf','epub','doc','docx'].includes(ext);var sizeMB=(file.size/1024/1024).toFixed(1),typeLabel=isVideo?'video':isPDF?'pdf':'book',icon=isVideo?'🎬':isPDF?'📄':'📁';var catMap={robotics:'Robotics',iot:'IoT',drones:'Drones',coding:'Coding & AI','3d':'3D Design',general:'General STEM'};var iv=setInterval(function(){progress+=Math.random()*15+4;if(progress>=100){progress=100;clearInterval(iv);var pe=document.getElementById('pct_'+uid),be=document.getElementById('bar_'+uid);if(pe){pe.textContent='Done!';pe.style.color='var(--lime)';}if(be){be.style.background='var(--lime)';be.style.width='100%';}var blobUrl=URL.createObjectURL(file);var nr={title:title,meta:ext.toUpperCase()+' • '+sizeMB+' MB • '+(catMap[cat]||cat),desc:desc,type:typeLabel,icon:icon,fileType:isVideo?'video':'document',blobUrl:blobUrl,fileName:file.name};uploadedResources.push(nr);if(isVideo){videos.unshift(nr);renderVideos(videos);}else{books.unshift(nr);renderBooks(books);}if(fi===pendingFiles.length-1){showToast('✅','"'+title+'" added!');if(te)te.value='';if(de)de.value='';if(ce)ce.value='robotics';pendingFiles=[];setTimeout(function(){var s=isVideo?'button[onclick*="videos"]':'button[onclick*="books"]';var tb=document.querySelector(s);if(tb)tb.click();},1200);}}else{var pe=document.getElementById('pct_'+uid),be=document.getElementById('bar_'+uid);if(pe)pe.textContent=Math.round(progress)+'%...';if(be)be.style.width=Math.min(progress,100)+'%';}},80);});}
+function submitUpload(){if(!isAdmin){openAdminLogin();return;}var te=document.getElementById('resTitle'),ce=document.getElementById('resCategory'),de=document.getElementById('resDesc');var title=te?te.value.trim():'',cat=ce?ce.value:'general',desc=de?de.value.trim():'Uploaded resource.';if(!title){showToast('⚠️','Add a title');return;}if(!pendingFiles.length){showToast('⚠️','Select a file');return;}var pels=document.querySelectorAll('.upload-progress');pendingFiles.forEach(function(file,fi){var el=pels[fi];if(!el)return;var uid=el.id,progress=0;var ext=file.name.split('.').pop().toLowerCase(),isVideo=['mp4','mov','avi','webm'].includes(ext),isPDF=['pdf','epub','doc','docx'].includes(ext);var sizeMB=(file.size/1024/1024).toFixed(1),typeLabel=isVideo?'video':isPDF?'pdf':'book',icon=isVideo?'🎬':isPDF?'📄':'📁';var catMap={robotics:'Robotics',iot:'IoT',drones:'Drones',coding:'Coding & AI','3d':'3D Design',general:'General STEM'};var iv=setInterval(function(){progress+=Math.random()*15+4;if(progress>=100){progress=100;clearInterval(iv);var pe=document.getElementById('pct_'+uid),be=document.getElementById('bar_'+uid);if(pe){pe.textContent='Done!';pe.style.color='var(--lime)';}if(be){be.style.background='var(--lime)';be.style.width='100%';}var blobUrl=URL.createObjectURL(file);var nr={title:title,meta:ext.toUpperCase()+' • '+sizeMB+' MB • '+(catMap[cat]||cat),desc:desc,type:typeLabel,icon:icon,fileType:isVideo?'video':'document',blobUrl:blobUrl,fileName:file.name};uploadedResources.push(nr);if(isVideo){videos.unshift(nr);renderVideos(videos);}else{books.unshift(nr);renderBooks(books);}if(fi===pendingFiles.length-1){persist();showToast('✅','"'+title+'" added!');if(te)te.value='';if(de)de.value='';if(ce)ce.value='robotics';pendingFiles=[];setTimeout(function(){var s=isVideo?'button[onclick*="videos"]':'button[onclick*="books"]';var tb=document.querySelector(s);if(tb)tb.click();},1200);}}else{var pe=document.getElementById('pct_'+uid),be=document.getElementById('bar_'+uid);if(pe)pe.textContent=Math.round(progress)+'%...';if(be)be.style.width=Math.min(progress,100)+'%';}},80);});}
 
 // ── ADMIN AUTH ──
 function openAdminLogin(){document.getElementById('adminModal').classList.add('open');document.getElementById('adminUser').value='';document.getElementById('adminPass').value='';document.getElementById('adminErr').classList.remove('show');document.body.style.overflow='hidden';setTimeout(function(){document.getElementById('adminUser').focus();},100);}
 function closeAdminLogin(){document.getElementById('adminModal').classList.remove('open');document.body.style.overflow='';}
-function doAdminLogin(){var u=document.getElementById('adminUser').value.trim(),p=document.getElementById('adminPass').value;if(u===ADMIN_USER&&p===ADMIN_PASS){isAdmin=true;document.body.classList.add('is-admin');document.getElementById('adminNavBadge').classList.add('visible');document.getElementById('adminLoginLi').style.display='none';document.getElementById('adminModeBar').classList.add('show');closeAdminLogin();renderAll();showToast('🛡️','Welcome back, Admin!');}else{document.getElementById('adminErr').classList.add('show');document.getElementById('adminPass').value='';document.getElementById('adminPass').focus();}}
+function doAdminLogin(){var u=document.getElementById('adminUser').value.trim(),p=document.getElementById('adminPass').value;if(u===ADMIN_USER&&p===ADMIN_PASS){isAdmin=true;document.body.classList.add('is-admin');document.getElementById('adminNavBadge').classList.add('visible');document.getElementById('adminLoginLi').style.display='none';document.getElementById('adminModeBar').classList.add('show');closeAdminLogin();renderAll();maybeShowFirebaseBanner();showToast('🛡️','Welcome back, Admin!');}else{document.getElementById('adminErr').classList.add('show');document.getElementById('adminPass').value='';document.getElementById('adminPass').focus();}}
 function logoutAdmin(){isAdmin=false;document.body.classList.remove('is-admin');document.getElementById('adminNavBadge').classList.remove('visible');document.getElementById('adminLoginLi').style.display='';document.getElementById('adminModeBar').classList.remove('show');var up=document.getElementById('tab-upload');if(up&&up.classList.contains('active')){var ft=document.querySelector('.res-tab:not(.upload-tab-btn)');if(ft)ft.click();}renderAll();showToast('👋','Logged out');}
 
 // ── DELETE CONFIRM ──
@@ -1619,8 +1624,111 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){closePrevie
 
 // ── RENDER ALL & INIT ──
 function renderAll(){renderStats();renderHowImg();renderStory();renderGalleryHero();renderPrograms();renderHow();renderImpact();renderPartners();renderValues();renderMilestones();renderGallery('all');renderTeam();renderVideos(videos);renderBooks(books);}
-document.addEventListener('DOMContentLoaded',function(){renderAll();initReveal();});
-window.addEventListener('scroll',initReveal);
+
+// ── FIREBASE PERSISTENCE ──
+// Replace the values below with your own Firebase project credentials.
+// Steps: https://console.firebase.google.com → New project → Realtime Database
+// → Create database (test mode) → Project settings → Your apps → Web app
+var FB_CONFIG = {
+  apiKey:            "AIzaSyBvr2K5dZ7NlpfumdMOqH4gZyj06utB52M",
+  authDomain:        "smart-tech-innovation-hub.firebaseapp.com",
+  databaseURL:       "https://smart-tech-innovation-hub-default-rtdb.firebaseio.com",
+  projectId:         "smart-tech-innovation-hub",
+  storageBucket:     "smart-tech-innovation-hub.firebasestorage.app",
+  messagingSenderId: "1037673097324",
+  appId:             "1:1037673097324:web:318b5441318b61c4c05049"
+};
+
+var db = null;       // Firebase database reference, set after init
+var fbReady = false; // true once Firebase is connected
+
+function firebaseConfigured(){
+  return FB_CONFIG.databaseURL && FB_CONFIG.databaseURL.indexOf('PASTE') === -1;
+}
+
+function initFirebase(){
+  if(!firebaseConfigured()) return;
+  try {
+    firebase.initializeApp(FB_CONFIG);
+    db = firebase.database();
+    fbReady = true;
+    // Live-sync: whenever data changes in Firebase, re-render immediately
+    db.ref('siteData').on('value', function(snap){
+      var d = snap.val();
+      if(!d) return;
+      if(d.sectionData) Object.keys(d.sectionData).forEach(function(k){ if(k in sectionData) sectionData[k]=d.sectionData[k]; });
+      if(d.teamMembers) teamMembers = d.teamMembers;
+      if(d.videos)  videos = d.videos;
+      if(d.books)   books  = d.books;
+      renderAll();
+      initReveal();
+    });
+  } catch(e) {
+    console.warn('Firebase init failed:', e);
+    fbReady = false;
+  }
+}
+
+function persist(){
+  if(fbReady && db){
+    // Save everything to Firebase — visible to ALL devices instantly
+    db.ref('siteData').set({
+      sectionData: sectionData,
+      teamMembers: teamMembers,
+      videos: videos,
+      books:  books
+    }).catch(function(e){ console.warn('Firebase save failed:', e); });
+  }
+  // Also save to localStorage as offline backup
+  try {
+    localStorage.setItem('stih_v2', JSON.stringify({ sectionData:sectionData, teamMembers:teamMembers, videos:videos, books:books }));
+  } catch(e){}
+}
+
+function loadPersisted(callback){
+  if(fbReady){
+    // Firebase live-sync handles loading via the .on('value') listener above
+    callback(); return;
+  }
+  // Fallback: load from localStorage if Firebase not configured
+  try{
+    var raw = localStorage.getItem('stih_v2');
+    if(raw){
+      var d = JSON.parse(raw);
+      if(d.sectionData) Object.keys(d.sectionData).forEach(function(k){ if(k in sectionData) sectionData[k]=d.sectionData[k]; });
+      if(d.teamMembers) teamMembers = d.teamMembers;
+      if(d.videos)  videos = d.videos;
+      if(d.books)   books  = d.books;
+    }
+  }catch(e){}
+  callback();
+}
+
+// Show a one-time setup banner if Firebase is not yet configured
+function maybeShowFirebaseBanner(){
+  if(firebaseConfigured()) return;
+  var bar = document.createElement('div');
+  bar.id = 'fbSetupBar';
+  bar.innerHTML = '⚠️ <strong>Cross-device sync not active.</strong> To make your edits visible on all devices, <a href="https://console.firebase.google.com" target="_blank" style="color:var(--lime);text-decoration:underline">create a free Firebase project</a> and paste your config into the FB_CONFIG object in this file. &nbsp;<button onclick="document.getElementById(\'fbSetupBar\').remove()" style="background:rgba(255,255,255,.15);border:none;color:var(--white);padding:.25rem .7rem;border-radius:6px;cursor:pointer;font-size:.8rem">Dismiss</button>';
+  bar.style.cssText = 'position:fixed;bottom:0;left:0;right:0;background:rgba(255,107,43,.92);color:#fff;padding:.75rem 5%;font-size:.82rem;z-index:9000;display:flex;align-items:center;gap:.6rem;backdrop-filter:blur(8px);flex-wrap:wrap';
+  document.body.appendChild(bar);
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  initFirebase();
+  if(!fbReady){
+    // Firebase not configured — load from localStorage and render
+    loadPersisted(function(){
+      renderAll();
+      initReveal();
+    });
+    // Only show banner to admin
+    document.addEventListener('adminLoggedIn', maybeShowFirebaseBanner);
+  }
+  // If Firebase IS configured, the .on('value') listener renders everything
+  else { initReveal(); }
+});
+window.addEventListener('scroll', initReveal);
 </script>
 </body>
 </html>
